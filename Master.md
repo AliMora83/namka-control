@@ -2,7 +2,7 @@
 
 >  Owner: Ali Mora | Location: Johannesburg, ZA
 
->  Last updated: 2026-03-29  |  Version: 1.0.0
+>  Last updated: 2026-03-29  |  Version: 1.0.1
 
 ---
 
@@ -14,7 +14,30 @@ Streamline project management through AI-assisted development — providing real
 
 - Persistent memory across AI agent sessions — when a chat gets too long, agents reference this for full context.
 - MACP (Multi-Agent Coordination Protocol) uses this as the ground truth to cross-check agent reviews and prevent hallucinations.
-- The `Last updated` date is auto-updated by GitHub Actions on every push to `main`.
+- The `Last updated` date and `Version` are auto-updated by GitHub Actions on every push to `main`.
+
+---
+
+## 📜 Versioning & Change Log
+
+This project uses a three-part version number: `MAJOR.MINOR.PATCH`
+
+| Part | Who changes it | When |
+|---|---|---|
+| **PATCH** | GitHub Actions (auto) | Every push to `main` |
+| **MINOR** | Ali (manual) | Meaningful feature additions or workflow changes |
+| **MAJOR** | Ali (manual) | Breaking changes to MACP protocol or architecture |
+
+### AI_CHANGELOG.md — Purpose & Decision
+
+`AI_CHANGELOG.md` is a dedicated, auto-maintained file that logs every versioned change to this repository. It was introduced in **v1.0.1** for the following reasons:
+
+- **AI context without clutter** — Any agent starting a new session can read `AI_CHANGELOG.md` to understand recent changes without parsing the full `Master.md`.
+- **Hallucination prevention** — Agents can verify that the version they are reading is the latest, and diff their understanding against the log.
+- **Separation of concerns** — `Master.md` remains the architectural source of truth. `AI_CHANGELOG.md` handles the *history* of how it got there.
+- **Scalability** — As the project grows, the review log inside `Master.md` would become unwieldy. `AI_CHANGELOG.md` offloads chronological history so `Master.md` stays focused.
+
+**Format:** Each entry is prepended (newest first) and contains the version, date, and commit message. Generated automatically by `.github/workflows/update-master-date.yml`.
 
 ---
 
@@ -50,6 +73,8 @@ Streamline project management through AI-assisted development — providing real
 - [x] Add `AGENT-ONBOARDING.md` with full Markdown formatting.
 - [x] Add `.github/workflows/update-master-date.yml` — auto-updates `Last updated` date on every push.
 - [x] Define MACP agent roles, Chain of Custody workflow, and conflict prevention rules.
+- [x] Add auto version bump (PATCH) to GitHub Actions workflow.
+- [x] Add `AI_CHANGELOG.md` — auto-maintained change log for AI agent context.
 
 ### Phase 1 — Foundation (NEXT UP)
 
@@ -148,13 +173,32 @@ Gemini Session 1 review is **ratified**. Role delineation, Chain of Custody, and
 
 ---
 
+### Session Review — 2026-03-29 (Evening) — Session 3
+**Agent:** Claude | **Status:** Completed | **Topic:** CI Versioning, AI_CHANGELOG.md Introduction & Master.md Ratification
+
+#### Ratification
+Comet Session 2 review is **ratified**. GitHub Actions workflow, Phase 0 documentation, and MACP Chain of Custody are all verified and operational.
+
+#### Work Completed This Session
+- ✅ **GitHub Actions workflow upgraded** — `.github/workflows/update-master-date.yml` now auto-bumps the PATCH version on every push to `main` in addition to updating the date. Hard failure guards added for missing `Version:` and `Last updated:` lines — no more silent failures.
+- ✅ **`AI_CHANGELOG.md` introduced** — New auto-maintained file prepended with each push. Contains version, date, and commit message. Newest entries always appear first for fast AI context loading. Created by the workflow on first run if absent.
+- ✅ **Versioning strategy defined** — PATCH auto via CI, MINOR/MAJOR manual by Ali. Documented in the new `📜 Versioning & Change Log` section of Master.md.
+- ✅ **Master.md updated** — `AI_CHANGELOG.md` rationale documented, Phase 0 checklist updated, Related Resources updated, version bumped to `1.0.1`.
+
+#### Recommendations
+- **Hand off to AG** to commit the updated workflow file and `Master.md`. This will trigger the first versioned run of the new CI pipeline and auto-create `AI_CHANGELOG.md`.
+- No blockers. Phase 1 scaffold is ready to begin.
+
+---
+
 ## 🔗 Related Resources
 
 - [Namka Mission Control](https://github.com/AliMora83/Namka-Mission-Control) - Parent repository.
 - [namka-control repo](https://github.com/AliMora83/namka-control) - Dashboard repo.
 - [README.md](./README.md) - Repository documentation.
 - [AGENT-ONBOARDING.md](./AGENT-ONBOARDING.md) - Agent roles and protocols.
-- [update-master-date.yml](./.github/workflows/update-master-date.yml) - CI: auto-date workflow.
+- [AI_CHANGELOG.md](./AI_CHANGELOG.md) - Auto-maintained version history for AI context.
+- [update-master-date.yml](./.github/workflows/update-master-date.yml) - CI: auto-date and version workflow.
 
 ---
 
