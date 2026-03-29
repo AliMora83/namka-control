@@ -29,7 +29,7 @@ Streamline project management through AI-assisted development — providing real
 |-------|---------------|--------|
 | **Gemini** | Architecture & Multi-project oversight | Available |
 | **Claude** | Frontend & UX Development | Available |
-| **Qwen** | Backend & API Development | Available |
+| **Antigravity** | Backend & API Development | Available |
 | **Comet** | Cross-checking & Coordination | Active |
 | **Antigravity** | Rapid Implementation | Active |
 
