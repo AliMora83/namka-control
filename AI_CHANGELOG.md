@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.5 — 2026-03-29
+- Update AI_CHANGELOG.md
+
+\
+## v1.0.5 — 2026-03-29\n- Update AI_CHANGELOG.md\n
 ---
 
 ## v1.0.4 — 2026-03-29
