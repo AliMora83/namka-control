@@ -1,0 +1,45 @@
+name: Update Master.md Date & Version
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/**'
+
+jobs:
+  update-master-date:
+    runs-on: ubuntu-latest
+    # Skip if the commit was made by this action (prevents infinite loop)
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && github.actor != 'github-actions[bot]'"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Last Updated date in Master.md
+        run: |
+          TODAY=$(date -u '+%Y-%m-%d')
+          # Update the date in the header blockquote
+          sed -i "s/Last updated: [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/Last updated: $TODAY/g" Master.md
+          echo "Updated Master.md date to $TODAY"
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet Master.md; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit updated date
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add Master.md
+          git commit -m "chore: auto-update Master.md date to $(date -u '+%Y-%m-%d') [skip ci]"
+          git push
