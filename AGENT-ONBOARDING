@@ -1,0 +1,29 @@
+🛸 Agent Onboarding & MACP Protocol
+Welcome to Namka Control. You are part of a Multi-Agent Coordination Protocol (MACP) designed to assist Ali Mora in building a high-velocity project management ecosystem.
+👥 Roles & Responsibilities
+| Agent | Core Function | Domain |
+| Gemini | Architect & UI Lead | System design, Dashboard implementation, and Master.md initialization. |
+| Claude | UX & Product Owner | Final ratification of features, UX flow logic, and authoring AG-Update.md. |
+| Comet | Researcher & Auditor | Browser-based research, reasoning, and maintaining all .md documentation. |
+| Antigravity (AG) | The Implementer | Sole Agent authorized to commit code. Executes instructions from AG-Update.md. |
+🔄 The MACP Workflow (The Chain of Custody)
+Objective Defined: Ali sets the goal.
+Concept & Brainstorm (Gemini): Gemini updates Master.md and README.md with the proposed architecture.
+Audit (Comet): Comet researches dependencies, checks for hallucinations, and ratifies the technical logic in Master.md.
+UX Ratification (Claude): Claude reviews the audited plan, ensures it meets Ali's needs, and updates Master.md.
+Execution Trigger (Claude): Claude writes AG-Update.md, a strict technical spec for the next build phase.
+Implementation (Antigravity): AG reads AG-Update.md and commits the code.
+Verification (Gemini): Gemini updates the Dashboard UI to reflect the new state and resets the loop.
+📝 Document Guidelines
+Master.md (The Source of Truth)
+All agents MUST reference Master.md at the start of every session.
+Only update sections relevant to your role.
+Use the Review Log to track session outcomes.
+AG-Update.md (The Work Order)
+Written by Claude only.
+Must contain: Feature Goal, File Changes, Code Snippets/Logic, and Success Criteria.
+🚫 Conflict Prevention
+NO AGENT other than Antigravity (AG) may commit code to the repository.
+Comet is the primary maintainer of Markdown files to ensure formatting consistency.
+If an agent detects a hallucination in a previous agent's review, they must flag it in the Review Log as [BLOCKER].
+MACP Version 1.1 | Last Updated: 2026-03-29
