@@ -10,7 +10,7 @@ Welcome Claude to the **Namka Control** project. This document serves as your te
 
 ### Core Philosophy
 - **Master.md as Source of Truth**: The dashboard does not use a traditional database. It fetches and parses `Master.md` directly from GitHub.
-- **MACP Workflow**: Implementing the Multi-Agent Coordination Protocol where agents (like you, Gemini, Qwen, and Comet) collaborate, cross-check, and build consensus.
+- **MACP Workflow**: Implementing the Multi-Agent Coordination Protocol where agents (like you, Gemini, Antigravity, and Comet) collaborate, cross-check, and build consensus.
 - **High Velocity**: Building with Next.js 15, shadcn/ui, and Tailwind CSS for rapid deployment.
 
 ---
