@@ -4,14 +4,11 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '.github/**'
 
 jobs:
   update-master-date:
     runs-on: ubuntu-latest
-    # Skip if the commit was made by this action (prevents infinite loop)
-    if: "!contains(github.event.head_commit.message, '[skip ci]') && github.actor != 'github-actions[bot]'"
+    if: github.actor != 'github-actions[bot]'
 
     steps:
       - name: Checkout repository
@@ -22,7 +19,6 @@ jobs:
       - name: Update Last Updated date in Master.md
         run: |
           TODAY=$(date -u '+%Y-%m-%d')
-          # Update the date in the header blockquote
           sed -i "s/Last updated: [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}/Last updated: $TODAY/g" Master.md
           echo "Updated Master.md date to $TODAY"
 
