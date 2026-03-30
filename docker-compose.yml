@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  namka-control:
+    build: .
+    container_name: namka-control
+    restart: unless-stopped
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - NEXT_TELEMETRY_DISABLED=1
+      - NODE_ENV=production
+    networks:
+      - web_network
+
+networks:
+  web_network:
+    external: true
