@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.15 — 2026-03-30
+- fix: change host port to 3001 to avoid conflict with existing process
+
+\
+## v1.0.15 — 2026-03-30\n- fix: change host port to 3001 to avoid conflict with existing process\n
 ## v1.0.14 — 2026-03-30
 - fix: expose port 3000 to localhost and update nginx proxy to 127.0.0.1
 
