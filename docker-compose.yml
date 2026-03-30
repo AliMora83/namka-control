@@ -5,6 +5,8 @@ services:
     build: .
     container_name: namka-control
     restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
