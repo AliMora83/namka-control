@@ -95,6 +95,11 @@ This project uses a three-part version number: `MAJOR.MINOR.PATCH`
 
 Project portfolio data has been moved to `Active-Projects.md`.
 
+**Purpose:**  
+- Keep `Master.md` focused on governance, MACP workflow, build phases, and review history.  
+- Use `Active-Projects.md` as the dedicated dashboard content source.  
+- Prevent duplication between coordination docs and UI data parsing.
+
 
 👥 AI Agent Assignments
 -----------------------
