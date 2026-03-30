@@ -93,15 +93,8 @@ This project uses a three-part version number: `MAJOR.MINOR.PATCH`
 📂 Active Projects
 ------------------
 
-### 🔴 Priority 1 – Setup & Configuration
+Project portfolio data has been moved to `Active-Projects.md`.
 
-#### 1. Namka Control Dashboard
-
-*   • **Repo:** https://github.com/AliMora83/namka-control
-*   • **Stack:** TypeScript / React / Next.js 15 / Tailwind / shadcn/ui
-*   • **Status:** Active | Last commit: 2026-03-30
-*   • **Next Step:** Gemini + Ali to define Phase 2 Docker architecture. Comet to research Hostinger VPS setup. Claude to author AG-Update.md.
-*   • **AI Model:** Claude (UX/Ratification) + Gemini (Architecture/UI) + Comet (Audit/Docs)
 
 👥 AI Agent Assignments
 -----------------------
