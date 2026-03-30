@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.14 — 2026-03-30
+- fix: expose port 3000 to localhost and update nginx proxy to 127.0.0.1
+
+\
+## v1.0.14 — 2026-03-30\n- fix: expose port 3000 to localhost and update nginx proxy to 127.0.0.1\n
 ## v1.0.13 — 2026-03-30
 - fix: force dynamic rendering to prevent build-time prerender failure
 
