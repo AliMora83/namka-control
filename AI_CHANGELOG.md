@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.18 — 2026-03-30
+- feat: add error boundaries and API error handling to dashboard
+
+\
+## v1.0.18 — 2026-03-30\n- feat: add error boundaries and API error handling to dashboard\n
 ## v1.0.17 — 2026-03-30
 - Update AI_CHANGELOG.md
 
