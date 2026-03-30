@@ -5,23 +5,15 @@ This file is auto-maintained for AI context. Each entry reflects a versioned cha
 ## v1.0.20 — 2026-03-30
 - docs: close Phase 2 — ratify error boundaries, add Session 6 review, scaffold Phase 3
 
-\
-## v1.0.20 — 2026-03-30\n- docs: close Phase 2 — ratify error boundaries, add Session 6 review, scaffold Phase 3\n
 ## v1.0.19 — 2026-03-30
 - docs: update Namka Control Dashboard — Phase 2 complete, Phase 3 next
 
-\
-## v1.0.19 — 2026-03-30\n- docs: update Namka Control Dashboard — Phase 2 complete, Phase 3 next\n
 ## v1.0.18 — 2026-03-30
 - feat: add error boundaries and API error handling to dashboard
 
-\
-## v1.0.18 — 2026-03-30\n- feat: add error boundaries and API error handling to dashboard\n
 ## v1.0.17 — 2026-03-30
 - Update AI_CHANGELOG.md
 
-\
-## v1.0.17 — 2026-03-30\n- Update AI_CHANGELOG.md\n
 ---
 
 ## v1.0.16 — 2026-03-30 — Sprint Close: Phase 2 Complete
@@ -71,19 +63,9 @@ AG executed fix. Dashboard now shows 5 active projects, phase subtitle reads "Ph
 | Phase 2 deployment live | ✅ Complete |
 | Projects displaying from `Active-Projects.md` | ✅ Complete |
 | Phase subtitle correct | ✅ Complete |
-| Security audit (`/api/master` response) | 🔄 Pending — AG to confirm no secrets in JSON response |
-| Error boundaries | 🔄 In progress — AG-Update issued this session |
-| `Active-Projects.md` — Namka Control card stale | 🔄 Pending — Comet to update Next Step + Progress |
-
----
-
-### Open Actions Before Phase 2 is Fully Closed
-
-1. **AG** — Security check: open `https://control.namka.cloud/api/master` in browser, confirm `GITHUB_TOKEN` and `GEMINI_API_KEY` are not present in the JSON response. Report result.
-2. **AG** — Implement error boundaries per `AG-Update.md` issued 2026-03-30 (evening).
-3. **Comet** — Update `Active-Projects.md`, Namka Control Dashboard entry:
-   - `Next Step` → `Phase 3 — Caching, zero-downtime deploy, error boundaries`
-   - `Progress` → `Phase 1 ✅ Complete · Phase 2 ✅ Complete · Phase 3 🔄 Not started`
+| Security audit (`/api/master` response) | ✅ Closed (AG confirmed, no secrets exposed) |
+| Error boundaries | ✅ Complete (AG commit `1d088a5`) |
+| `Active-Projects.md` — Namka Control card updated | ✅ Complete (Comet) |
 
 ---
 
@@ -95,79 +77,57 @@ AG executed fix. Dashboard now shows 5 active projects, phase subtitle reads "Ph
 - UI refinement: dashboard polish, loading skeletons, mobile layout review
 
 ---
+
 ## v1.0.16 — 2026-03-30
 - fix: fetch Active-Projects.md for project data + fix phase display
 
-\
-## v1.0.16 — 2026-03-30\n- fix: fetch Active-Projects.md for project data + fix phase display\n
 ## v1.0.15 — 2026-03-30
 - fix: change host port to 3001 to avoid conflict with existing process
 
-\
-## v1.0.15 — 2026-03-30\n- fix: change host port to 3001 to avoid conflict with existing process\n
 ## v1.0.14 — 2026-03-30
 - fix: expose port 3000 to localhost and update nginx proxy to 127.0.0.1
 
-\
-## v1.0.14 — 2026-03-30\n- fix: expose port 3000 to localhost and update nginx proxy to 127.0.0.1\n
 ## v1.0.13 — 2026-03-30
 - fix: force dynamic rendering to prevent build-time prerender failure
 
-\
-## v1.0.13 — 2026-03-30\n- fix: force dynamic rendering to prevent build-time prerender failure\n
 ## v1.0.12 — 2026-03-30
 - feat: add Phase 2 Docker deployment configuration
 
-\
-## v1.0.12 — 2026-03-30\n- feat: add Phase 2 Docker deployment configuration\n
 ## v1.0.11 — 2026-03-30
 - Update AI_CHANGELOG.md
 
-\
-## v1.0.11 — 2026-03-30\n- Update AI_CHANGELOG.md\n
 ## Session — 2026-03-30 (Claude Ratification)
 Agent: Claude | Role: UX/Product Owner
 Topic: Phase 2 Docker Deployment Ratification
 
 - Reviewed Docker.md v1.0.0 (authored by Comet)
 - Issued GREEN LIGHT on all three focus areas:
-  · CI/CD safety: ✅ Approved (if: success() guard confirmed)
-  · Caching: ✅ Deferred to Phase 3
-  · Downtime: ✅ Accepted, documented in AG-Update.md
+  - CI/CD safety: ✅ Approved (if: success() guard confirmed)
+  - Caching: ✅ Deferred to Phase 3
+  - Downtime: ✅ Accepted, documented in AG-Update.md
 - Authored AG-Update.md (Phase 2 work order for AG, 14 steps)
 - No amendments required to Docker.md spec
+
 Next: AG executes AG-Update.md · Gemini verifies post-deploy
 
 ## v1.0.10 — 2026-03-30
 - docs: add Docker.md — Phase 2 deployment spec for Claude ratification
 
-\
-## v1.0.10 — 2026-03-30\n- docs: add Docker.md — Phase 2 deployment spec for Claude ratification\n
 ## v1.0.9 — 2026-03-30
 - Update Master.md
 
-\
-## v1.0.9 — 2026-03-30\n- Update Master.md\n
 ## v1.0.8 — 2026-03-30
 - Update Master.md
 
-\
-## v1.0.8 — 2026-03-30\n- Update Master.md\n
 ## v1.0.7 — 2026-03-30
 - Create Active-Projects.md
 
-\
-## v1.0.7 — 2026-03-30\n- Create Active-Projects.md\n
 ## v1.0.6 — 2026-03-30
-- Update Master.mddocs: ratify Session 4 and optimize Master.md for Phase 2
+- docs: ratify Session 4 and optimize Master.md for Phase 2
 
-\
-## v1.0.6 — 2026-03-30\n- Update Master.mddocs: ratify Session 4 and optimize Master.md for Phase 2\n
 ## v1.0.5 — 2026-03-29
 - Update AI_CHANGELOG.md
 
-\
-## v1.0.5 — 2026-03-29\n- Update AI_CHANGELOG.md\n
 ---
 
 ## v1.0.4 — 2026-03-29
