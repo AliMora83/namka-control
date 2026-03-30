@@ -2,6 +2,79 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+---
+
+## v1.0.16 — 2026-03-30 — Sprint Close: Phase 2 Complete
+
+**Session Agent:** Claude (UX/Product Owner)
+**Session Type:** Ratification → Execution → Bug Fix → Sprint Close
+**Covers:** Sessions 6–8 of the Namka Control build log
+
+---
+
+### What Happened This Sprint
+
+#### 1. Phase 2 Docker Deployment — Ratified & Executed ✅
+
+Claude reviewed `Docker.md v1.0.0` (authored by Comet) and issued a **GREEN LIGHT** ratification across all three focus areas:
+
+- **CI/CD Safety:** `if: success()` guard confirmed correct. Dual-build pattern (runner + Docker) accepted as safe for Phase 2.
+- **Caching (`/api/master`):** Deferred to Phase 3. No justification for SWR complexity before first production request.
+- **Deployment downtime:** ~1–2 min outage per push accepted and documented. Zero-downtime rolling deploy flagged as Phase 3 item.
+
+AG executed `AG-Update.md` (Phase 2 work order, 14 steps). All 13 checklist items returned ✅. `https://control.namka.cloud` went live with SSL, Docker, Nginx, and GitHub Actions CI/CD active.
+
+---
+
+#### 2. Post-Deploy Bug Fix — Projects Not Displaying 🔴 → ✅
+
+**Bug 1 (Critical):** Dashboard showed `FOCUS PROJECTS (0) — No projects found in Master.md.`
+
+Root cause: Comet's Session 5 optimisation moved all project data from `Master.md` into `Active-Projects.md`. The `/api/master` route was never updated to reflect this — it continued fetching `Master.md` only, where the project section now reads *"Project portfolio data has been moved to Active-Projects.md."* Parser returned empty array.
+
+Fix: Add second GitHub API fetch for `Active-Projects.md`. Route project parsing to `projectsContent`, keep metadata parsing on `masterContent`.
+
+**Bug 2 (Secondary):** Phase subtitle displayed "Phase 0 — Documentation."
+
+Root cause: Parser grabbed the first phase heading in `Master.md` regardless of completion status.
+
+Fix: Walk all phase headings, return first heading without `✅ COMPLETE`.
+
+AG executed fix. Dashboard now shows 5 active projects, phase subtitle reads "Phase 2 — Deploy", version reads v1.0.16.
+
+---
+
+#### 3. Sprint Close Assessment
+
+| Item | Status |
+|---|---|
+| Phase 2 deployment live | ✅ Complete |
+| Projects displaying from `Active-Projects.md` | ✅ Complete |
+| Phase subtitle correct | ✅ Complete |
+| Security audit (`/api/master` response) | 🔄 Pending — AG to confirm no secrets in JSON response |
+| Error boundaries | 🔄 In progress — AG-Update issued this session |
+| `Active-Projects.md` — Namka Control card stale | 🔄 Pending — Comet to update Next Step + Progress |
+
+---
+
+### Open Actions Before Phase 2 is Fully Closed
+
+1. **AG** — Security check: open `https://control.namka.cloud/api/master` in browser, confirm `GITHUB_TOKEN` and `GEMINI_API_KEY` are not present in the JSON response. Report result.
+2. **AG** — Implement error boundaries per `AG-Update.md` issued 2026-03-30 (evening).
+3. **Comet** — Update `Active-Projects.md`, Namka Control Dashboard entry:
+   - `Next Step` → `Phase 3 — Caching, zero-downtime deploy, error boundaries`
+   - `Progress` → `Phase 1 ✅ Complete · Phase 2 ✅ Complete · Phase 3 🔄 Not started`
+
+---
+
+### Phase 3 Preview (next sprint)
+
+- Caching: `stale-while-revalidate` for `/api/master` and `/api/projects`
+- Zero-downtime deploy: rolling restart or `--wait` with Docker health check
+- Gemini AI layer: activate `/api/ai` Route Handler for project summaries
+- UI refinement: dashboard polish, loading skeletons, mobile layout review
+
+---
 ## v1.0.16 — 2026-03-30
 - fix: fetch Active-Projects.md for project data + fix phase display
 
