@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.17 — 2026-03-30
+- Update AI_CHANGELOG.md
+
+\
+## v1.0.17 — 2026-03-30\n- Update AI_CHANGELOG.md\n
 ---
 
 ## v1.0.16 — 2026-03-30 — Sprint Close: Phase 2 Complete
