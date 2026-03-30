@@ -18,11 +18,11 @@
 | **Status** | Active |
 | **Priority** | 🔴 Priority 1 |
 | **Assigned Agent** | Comet (Audit/Docs) · Claude (UX/Product) · Gemini (Architecture/UI) · AG (Implementation) |
-| **Live URL** | control.namka.cloud (coming soon) |
+| **Live URL** | https://control.namka.cloud |
 | **Deployment** | Hostinger VPS · Docker · Nginx · Certbot |
-| **Next Step** | Phase 2 — Dockerfile, Nginx reverse proxy, DNS, SSL, GitHub Actions auto-deploy |
+| **Next Step** | Phase 3 — Caching, zero-downtime deploy, error boundaries |
 | **Blocker** | None |
-| **Progress** | Phase 1 ✅ Complete · Phase 2 🔄 Not started |
+| **Progress** | Phase 1 ✅ Complete · Phase 2 ✅ Complete · Phase 3 🔄 Not started |
 | **Last Updated** | 2026-03-30 |
 
 ---
