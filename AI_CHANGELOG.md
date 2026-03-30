@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.20 — 2026-03-30
+- docs: close Phase 2 — ratify error boundaries, add Session 6 review, scaffold Phase 3
+
+\
+## v1.0.20 — 2026-03-30\n- docs: close Phase 2 — ratify error boundaries, add Session 6 review, scaffold Phase 3\n
 ## v1.0.19 — 2026-03-30
 - docs: update Namka Control Dashboard — Phase 2 complete, Phase 3 next
 
