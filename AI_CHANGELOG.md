@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.16 — 2026-03-30
+- fix: fetch Active-Projects.md for project data + fix phase display
+
+\
+## v1.0.16 — 2026-03-30\n- fix: fetch Active-Projects.md for project data + fix phase display\n
 ## v1.0.15 — 2026-03-30
 - fix: change host port to 3001 to avoid conflict with existing process
 
