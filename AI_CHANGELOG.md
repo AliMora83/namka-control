@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.7 — 2026-03-30
+- Create Active-Projects.md
+
+\
+## v1.0.7 — 2026-03-30\n- Create Active-Projects.md\n
 ## v1.0.6 — 2026-03-30
 - Update Master.mddocs: ratify Session 4 and optimize Master.md for Phase 2
 
