@@ -2,7 +2,7 @@
 ======================================
 
 > Owner: Ali Mora | Location: Johannesburg, ZA
-> Last updated: 2026-03-30 | Version: 1.0.5
+> Last updated: 2026-03-30 | Version: 1.0.6
 
 🎯 Mission
 ----------
