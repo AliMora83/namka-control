@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.12 — 2026-03-30
+- feat: add Phase 2 Docker deployment configuration
+
+\
+## v1.0.12 — 2026-03-30\n- feat: add Phase 2 Docker deployment configuration\n
 ## v1.0.11 — 2026-03-30
 - Update AI_CHANGELOG.md
 
