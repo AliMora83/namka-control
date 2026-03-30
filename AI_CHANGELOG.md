@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.21 — 2026-03-30
+- docs: clean AI_CHANGELOG — remove malformed duplicate entries, close Phase 2 sprint
+
+\
+## v1.0.21 — 2026-03-30\n- docs: clean AI_CHANGELOG — remove malformed duplicate entries, close Phase 2 sprint\n
 ## v1.0.20 — 2026-03-30
 - docs: close Phase 2 — ratify error boundaries, add Session 6 review, scaffold Phase 3
 
