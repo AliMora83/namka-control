@@ -11,6 +11,7 @@ export interface Project {
   nextStep: string;
   lastCommit: string;
   agents: string[];
+  progress?: string;
 }
 
 export interface ReviewEntry {

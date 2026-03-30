@@ -4,9 +4,9 @@ import { ProjectCard } from "@/components/ProjectCard";
 async function getMasterData() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
   const res = await fetch(`${baseUrl}/api/master`, { next: { revalidate: 60 } });
-  if (!res.ok) throw new Error("Failed to fetch Master.md");
-  const { raw } = await res.json();
-  return parseMaster(raw);
+  if (!res.ok) throw new Error("Failed to fetch data from GitHub API");
+  const { raw, projectsRaw } = await res.json();
+  return parseMaster(raw, projectsRaw);
 }
 
 export async function Dashboard() {
