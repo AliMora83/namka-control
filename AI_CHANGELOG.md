@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.13 — 2026-03-30
+- fix: force dynamic rendering to prevent build-time prerender failure
+
+\
+## v1.0.13 — 2026-03-30\n- fix: force dynamic rendering to prevent build-time prerender failure\n
 ## v1.0.12 — 2026-03-30
 - feat: add Phase 2 Docker deployment configuration
 
