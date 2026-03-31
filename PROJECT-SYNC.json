@@ -1,0 +1,25 @@
+{
+  "project": "Namka Control Dashboard",
+  "repo": "AliMora83/namka-control",
+  "branch": "main",
+  "stack": "TypeScript / Next.js 15 / Tailwind CSS / shadcn/ui / GitHub API / Gemini API",
+  "status": "Active",
+  "priority": 1,
+  "priority_label": "🔴 Priority 1 — Ship Now",
+  "progress_percent": 70,
+  "progress_label": "Phase 2 complete — Phase 3 not started",
+  "current_phase": "Phase 3",
+  "next_step": "Caching, zero-downtime deploy, error boundaries",
+  "blocker": null,
+  "live_url": "https://control.namka.cloud",
+  "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
+  "agents": ["Claude", "Comet", "Gemini", "AG"],
+  "version": "1.0.10",
+  "last_push": {
+    "timestamp": "",
+    "actor": "",
+    "commit_message": "placeholder — overwritten by workflow on next push",
+    "sha": ""
+  },
+  "last_updated": "2026-03-31"
+}
