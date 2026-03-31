@@ -167,7 +167,7 @@ export async function Dashboard() {
           }}>
             {data ? (
               <>
-                Phase {data.phase.current} — {data.phase.label} · Master.md v{data.version} · Updated {data.lastUpdated}
+                {data.phase.label} · Master.md v{data.version} · Updated {data.lastUpdated}
               </>
             ) : (
               'Data sourced from Active-Projects.md via GitHub API · Namka Mission Control'
