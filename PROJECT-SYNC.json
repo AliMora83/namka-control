@@ -14,12 +14,12 @@
   "live_url": "https://control.namka.cloud",
   "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
   "agents": ["Claude", "Comet", "Gemini", "AG"],
-  "version": "1.0.10",
+  "version": "1.0.24",
   "last_push": {
-    "timestamp": "",
-    "actor": "",
-    "commit_message": "placeholder — overwritten by workflow on next push",
-    "sha": ""
+    "timestamp": "2026-03-31T21:38:50Z",
+    "actor": "AliMora83",
+    "commit_message": "chore: add PROJECT-SYNC.json and generation workflow",
+    "sha": "108976c"
   },
   "last_updated": "2026-03-31"
 }
