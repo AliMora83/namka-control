@@ -14,6 +14,12 @@ interface FetchResult {
   detail?: string;
 }
 
+interface ProjectsResult {
+  projects: Project[];
+  errors: string[];
+  timestamp: string;
+}
+
 async function getMasterData(): Promise<FetchResult> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
@@ -21,13 +27,31 @@ async function getMasterData(): Promise<FetchResult> {
     const json = await res.json();
 
     if (!res.ok || json.error) {
-      return { data: null, error: json.error ?? "Failed to fetch data", detail: json.detail };
+      return { data: null, error: json.error ?? "Failed to fetch master data", detail: json.detail };
     }
 
     return { data: parseMaster(json.raw, json.projectsRaw), error: null };
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
-    return { data: null, error: "Network error", detail: message };
+    return { data: null, error: "Network error (Master)", detail: message };
+  }
+}
+
+async function getProjectsData(): Promise<{ projects: Project[]; errors: string[] }> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/projects`, { next: { revalidate: 60 } });
+    const json = await res.json();
+
+    if (!res.ok || json.error) {
+       console.error("Projects API error:", json.error);
+       return { projects: [], errors: [json.error || "Failed to fetch projects"] };
+    }
+
+    return { projects: json.projects, errors: json.errors || [] };
+  } catch (err) {
+    console.error("Projects Fetch error:", err);
+    return { projects: [], errors: ["Network error (Projects)"] };
   }
 }
 
@@ -42,17 +66,23 @@ function toPriorityNum(priority: string): number {
 }
 
 export async function Dashboard() {
-  const { data, error, detail } = await getMasterData();
+  const [masterRes, projectsRes] = await Promise.all([
+    getMasterData(),
+    getProjectsData(),
+  ]);
 
-  const allProjects: Project[] = (data?.projects ?? []).map(p => ({
-    ...p,
-    priorityNum: toPriorityNum(p.priority),
-  }));
+  const { data, error: masterError, detail: masterDetail } = masterRes;
+  const { projects: liveProjects, errors: projectErrors } = projectsRes;
 
-  const p1Projects = allProjects.filter(p => p.priorityNum === 1);
-  const p2Projects = allProjects.filter(p => p.priorityNum === 2);
-  const p3Projects = allProjects.filter(p => p.priorityNum === 3);
-  const p4Projects = allProjects.filter(p => (p.priorityNum ?? 4) >= 4);
+  // Use live projects if available, otherwise fallback to master data (legacy)
+  const allProjects: Project[] = liveProjects.length > 0 
+    ? liveProjects.map((p: Project) => ({ ...p, priorityNum: p.priorityNum ?? toPriorityNum(p.priority) }))
+    : (data?.projects ?? []).map((p: Project) => ({ ...p, priorityNum: toPriorityNum(p.priority) }));
+
+  const p1Projects = allProjects.filter((p: Project) => p.priorityNum === 1);
+  const p2Projects = allProjects.filter((p: Project) => p.priorityNum === 2);
+  const p3Projects = allProjects.filter((p: Project) => p.priorityNum === 3);
+  const p4Projects = allProjects.filter((p: Project) => (p.priorityNum ?? 4) >= 4);
 
   return (
     <ErrorBoundary
@@ -69,11 +99,11 @@ export async function Dashboard() {
         {/* ── Main panel ── */}
         <main className="main-panel">
 
-          {error ? (
+          {masterError && liveProjects.length === 0 ? (
             <ErrorCard
-              title="Could not load projects"
-              message="The dashboard was unable to fetch project data from GitHub. This may be a temporary API issue."
-              detail={detail}
+              title="Could not load project data"
+              message="The dashboard was unable to fetch data from GitHub. This may be a temporary API issue."
+              detail={masterDetail}
             />
           ) : allProjects.length === 0 ? (
             <div style={{

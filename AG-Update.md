@@ -1,612 +1,600 @@
-# ⚙️ AG-Update.md — Phase 1 Scaffold + CI Upgrade
+# AG-Update.md — Cross-Repo Standardisation
+## Phase 1: namka-control + PROJECT-SYNC.json Infrastructure
 
-> **Authored by:** Claude (UX & Product Owner)
-> **Date:** 2026-03-29
-> **Version target:** 1.0.2
-> **Repo:** https://github.com/AliMora83/namka-control
-> **Status:** 🟢 READY FOR IMPLEMENTATION
-
----
-
-## 📋 Pre-flight Checklist (AG must confirm before starting)
-
-- [ ] Pull latest `main` branch — ensure you have the updated `Master.md` (Version: 1.0.1) and the new workflow file.
-- [ ] Confirm Node.js ≥ 18 is available locally.
-- [ ] Confirm you have write access to `github.com/AliMora83/namka-control`.
-- [ ] Read `Master.md` in full before touching any file.
-- [ ] No other agent is mid-session on this repo (check Review Log).
+> **Issued by:** Claude (UX & Product Owner)
+> **Date:** 2026-03-31
+> **Session:** Cross-Repo Documentation & Dashboard Sync Infrastructure
+> **Priority:** 🔴 Execute in order — namka-control first, then remaining 6 repos
+> **Repo Hub:** https://github.com/AliMora83/namka-control
 
 ---
 
-## 🎯 Feature Goal
+## 🔍 Audit Results — What Exists vs. What's Needed
 
-Bootstrap the Namka Control Next.js 15 application from scratch inside the existing repo. At the end of this update, the repo must contain:
+| Repo | Branch | README | Master.md | AI_CHANGELOG | AGENT-ONBOARDING | Workflows | PROJECT-SYNC.json |
+|---|---|---|---|---|---|---|---|
+| namka-control | main | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ Add |
+| Odoo-POS-Terminal | **master** ⚠️ | ✅ basic | ❌ Missing | ❌ Missing | ❌ Missing | ❌ Missing | ❌ Add |
+| SmartPress | main | ✅ | ✅ | ❌ Missing | ✅ (needs update) | ✅ partial | ❌ Add |
+| Atlas-Website | main | ✅ | ✅ | ❌ Missing | ❌ Missing | ❌ Missing | ❌ Add |
+| Kora-Tutor | main | ✅ | ⚠️ Named `Kora-Master.md` | ❌ Missing | ❌ Missing | ❌ Missing | ❌ Add |
+| EventSaaS | main | ✅ | ❌ Missing | ❌ Missing | ❌ Missing | ✅ partial | ❌ Add |
+| Odoo-BA-API | main | ❓ unconfirmed | ❓ | ❌ Missing | ❌ Missing | ❌ Missing | ❌ Add |
 
-1. A working Next.js 15 (App Router, TypeScript) application.
-2. A live GitHub API integration that fetches and parses `Master.md`.
-3. A dashboard home page rendering 5 priority project cards from parsed data.
-4. Environment variable scaffolding (`.env.example`, `.env.local` in `.gitignore`).
-5. The upgraded CI workflow and updated `Master.md` (v1.0.1) committed first, before any app code.
+### ⚠️ Key Issues Found
 
----
-
-## 🗂 Repo State After This Update
-
-```
-namka-control/
-├── .github/
-│   └── workflows/
-│       └── update-master-date.yml     ← UPGRADED (version bump + AI_CHANGELOG)
-├── src/
-│   └── app/
-│       ├── layout.tsx                 ← Root layout, metadata, fonts
-│       ├── page.tsx                   ← Dashboard home page
-│       ├── globals.css                ← Tailwind base styles
-│       └── api/
-│           └── master/
-│               └── route.ts           ← GitHub API fetcher (server-side)
-├── src/
-│   └── lib/
-│       └── parseMaster.ts             ← Master.md parser → typed JSON
-├── src/
-│   └── types/
-│       └── project.ts                 ← TypeScript interfaces
-├── src/
-│   └── components/
-│       ├── ProjectCard.tsx            ← Individual project card
-│       └── Dashboard.tsx              ← Grid layout + data fetching wrapper
-├── .env.example                       ← NEW
-├── .gitignore                         ← Ensure .env.local is listed
-├── Master.md                          ← UPDATED (v1.0.1)
-├── AI_CHANGELOG.md                    ← NEW (auto-created by CI on first push)
-├── AGENT-ONBOARDING.md                ← UNCHANGED
-├── package.json
-├── tsconfig.json
-├── tailwind.config.ts
-├── postcss.config.mjs
-└── next.config.ts
-```
+1. **Kora-Tutor** — Master file is named `Kora-Master.md`, not `Master.md`. Must be standardised. Dashboard looks for `Master.md` by convention.
+2. **Odoo-POS-Terminal** — Uses `master` branch, not `main`. All workflows must target `master`.
+3. **SmartPress** — `AGENT-ONBOARDING.md` references the old `Namka-Mission-Control` repo. Must be updated to point to `namka-control`.
+4. **EventSaaS** — Has a `.agent/` folder (non-standard). Retain — do not modify or delete it.
+5. **Odoo-BA-API** — Could not confirm file list due to rate limit. AG must audit manually before creating files.
 
 ---
 
-## 📦 Step 1 — Commit CI Upgrade & Documentation First
+## 📐 Decided Standard: 4-File Schema Per Project
 
-Before scaffolding the app, commit the documentation and workflow changes as a standalone commit. This triggers the new CI pipeline for the first time and auto-creates `AI_CHANGELOG.md`.
-
-```bash
-# From repo root (namka-control/)
-git add Master.md .github/workflows/update-master-date.yml
-git commit -m "chore: upgrade CI workflow with version bump and add AI_CHANGELOG support"
-git push origin main
-```
-
-> ✅ Expected result: GitHub Actions runs, bumps version to 1.0.2, creates `AI_CHANGELOG.md` with the first entry.
-
-Verify the Action passed in the GitHub Actions tab before proceeding to Step 2.
-
----
-
-## 📦 Step 2 — Scaffold Next.js 15 App
-
-Run inside the repo root (not a subdirectory — the app lives at the root):
-
-```bash
-npx create-next-app@latest . \
-  --typescript \
-  --tailwind \
-  --eslint \
-  --app \
-  --src-dir \
-  --import-alias "@/*" \
-  --no-git
-```
-
-> `--no-git` because the repo already exists. Do not re-initialise git.
-
-Accept all defaults when prompted. Verify `package.json` shows `"next": "^15.x.x"`.
-
----
-
-## 📦 Step 3 — Install Dependencies
-
-```bash
-npm install
-npm install shadcn-ui @radix-ui/react-slot class-variance-authority clsx tailwind-merge lucide-react
-npx shadcn@latest init
-```
-
-When `shadcn init` prompts:
-- Style: **Default**
-- Base colour: **Slate**
-- CSS variables: **Yes**
-
-Then add the Badge and Card components:
-
-```bash
-npx shadcn@latest add card badge
-```
-
----
-
-## 📦 Step 4 — Environment Variables
-
-### `.env.example`
-
-Create this file at repo root:
-
-```env
-# GitHub API — required to fetch Master.md
-# Generate at: https://github.com/settings/tokens
-# Scopes needed: repo (read)
-GITHUB_TOKEN=your_github_pat_here
-
-# GitHub Repo details
-GITHUB_OWNER=AliMora83
-GITHUB_REPO=namka-control
-GITHUB_BRANCH=main
-
-# Gemini AI (for future Phase 2 AI layer)
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-### `.env.local` (AG creates locally, never committed)
-
-```env
-GITHUB_TOKEN=<Ali's actual PAT>
-GITHUB_OWNER=AliMora83
-GITHUB_REPO=namka-control
-GITHUB_BRANCH=main
-```
-
-### Verify `.gitignore`
-
-Ensure this line exists in `.gitignore` (create-next-app adds it, but confirm):
-
-```
-.env.local
-```
-
----
-
-## 📦 Step 5 — TypeScript Types
-
-Create `src/types/project.ts`:
-
-```typescript
-export type Priority = "critical" | "high" | "medium" | "low";
-export type ProjectStatus = "active" | "blocked" | "complete" | "paused";
-
-export interface Project {
-  id: string;
-  name: string;
-  repo: string;
-  stack: string;
-  status: ProjectStatus;
-  priority: Priority;
-  nextStep: string;
-  lastCommit: string;
-  agents: string[];
-}
-
-export interface ReviewEntry {
-  session: number;
-  agent: string;
-  date: string;
-  topic: string;
-  status: "completed" | "blocked" | "in-progress";
-}
-
-export interface MasterData {
-  version: string;
-  lastUpdated: string;
-  projects: Project[];
-  reviews: ReviewEntry[];
-  phase: {
-    current: number;
-    label: string;
-  };
-}
-```
-
----
-
-## 📦 Step 6 — GitHub API Route
-
-Create `src/app/api/master/route.ts`:
-
-```typescript
-import { NextResponse } from "next/server";
-
-const GITHUB_API = "https://api.github.com";
-
-export async function GET() {
-  const owner  = process.env.GITHUB_OWNER  ?? "AliMora83";
-  const repo   = process.env.GITHUB_REPO   ?? "namka-control";
-  const branch = process.env.GITHUB_BRANCH ?? "main";
-  const token  = process.env.GITHUB_TOKEN;
-
-  if (!token) {
-    return NextResponse.json(
-      { error: "GITHUB_TOKEN is not set" },
-      { status: 500 }
-    );
-  }
-
-  const url = `${GITHUB_API}/repos/${owner}/${repo}/contents/Master.md?ref=${branch}`;
-
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/vnd.github.v3.raw",
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-    next: { revalidate: 60 }, // ISR: revalidate every 60 seconds
-  });
-
-  if (!res.ok) {
-    return NextResponse.json(
-      { error: `GitHub API error: ${res.status} ${res.statusText}` },
-      { status: res.status }
-    );
-  }
-
-  const raw = await res.text();
-  return NextResponse.json({ raw });
-}
-```
-
----
-
-## 📦 Step 7 — Master.md Parser
-
-Create `src/lib/parseMaster.ts`:
-
-```typescript
-import type { MasterData, Project, ReviewEntry, Priority, ProjectStatus } from "@/types/project";
-
-function extractVersion(raw: string): string {
-  const match = raw.match(/Version:\s*([\d.]+)/);
-  return match?.[1] ?? "unknown";
-}
-
-function extractLastUpdated(raw: string): string {
-  const match = raw.match(/Last updated:\s*(\d{4}-\d{2}-\d{2})/);
-  return match?.[1] ?? "unknown";
-}
-
-function extractProjects(raw: string): Project[] {
-  const projects: Project[] = [];
-
-  // Match each project block starting with ####
-  const projectBlocks = raw.matchAll(
-    /####\s+\d+\.\s+(.+?)\n([\s\S]*?)(?=####|\n---|\n##\s)/g
-  );
-
-  for (const block of projectBlocks) {
-    const name = block[1].trim();
-    const body = block[2];
-
-    const repo      = body.match(/\*\*Repo:\*\*.*\((https?:\/\/[^\)]+)\)/)?.[1]?.trim() ?? "";
-    const stack     = body.match(/\*\*Stack:\*\*\s*(.+)/)?.[1]?.trim() ?? "";
-    const statusRaw = body.match(/\*\*Status:\*\*\s*(.+)/)?.[1]?.split("|")[0]?.trim().toLowerCase() ?? "active";
-    const nextStep  = body.match(/\*\*Next Step:\*\*\s*(.+)/)?.[1]?.trim() ?? "";
-    const lastCommit = body.match(/Last commit:\s*(\d{4}-\d{2}-\d{2})/)?.[1]?.trim() ?? "";
-    const agentsRaw = body.match(/\*\*AI Model:\*\*\s*(.+)/)?.[1]?.trim() ?? "";
-
-    // Derive priority from section heading (Priority 1 → critical, etc.)
-    const priorityMatch = raw.match(new RegExp(`### 🔴 Priority (\\d+)[^#]*####[^#]*${name}`));
-    const priorityNum = parseInt(priorityMatch?.[1] ?? "2");
-    const priorityMap: Record<number, Priority> = { 1: "critical", 2: "high", 3: "medium" };
-    const priority: Priority = priorityMap[priorityNum] ?? "low";
-
-    const statusMap: Record<string, ProjectStatus> = {
-      active: "active", blocked: "blocked", complete: "complete", paused: "paused"
-    };
-
-    projects.push({
-      id: name.toLowerCase().replace(/\s+/g, "-"),
-      name,
-      repo,
-      stack,
-      status: statusMap[statusRaw] ?? "active",
-      priority,
-      nextStep,
-      lastCommit,
-      agents: agentsRaw.split("+").map((a) => a.trim()),
-    });
-  }
-
-  return projects;
-}
-
-function extractReviews(raw: string): ReviewEntry[] {
-  const reviews: ReviewEntry[] = [];
-  const blocks = raw.matchAll(
-    /### Session Review — (\d{4}-\d{2}-\d{2}).*?— Session (\d+)\n\*\*Agent:\*\*\s*(.+?)\s*\|.*?\*\*Topic:\*\*\s*(.+)/g
-  );
-
-  for (const block of blocks) {
-    reviews.push({
-      session: parseInt(block[2]),
-      agent: block[3].trim(),
-      date: block[1].trim(),
-      topic: block[4].trim(),
-      status: "completed",
-    });
-  }
-
-  return reviews;
-}
-
-function detectCurrentPhase(raw: string): { current: number; label: string } {
-  if (raw.includes("Phase 1") && raw.includes("NEXT UP")) return { current: 1, label: "Foundation" };
-  if (raw.includes("Phase 2") && raw.includes("NEXT UP")) return { current: 2, label: "Deploy" };
-  return { current: 0, label: "Documentation" };
-}
-
-export function parseMaster(raw: string): MasterData {
-  return {
-    version:     extractVersion(raw),
-    lastUpdated: extractLastUpdated(raw),
-    projects:    extractProjects(raw),
-    reviews:     extractReviews(raw),
-    phase:       detectCurrentPhase(raw),
-  };
-}
-```
-
----
-
-## 📦 Step 8 — Components
-
-### `src/components/ProjectCard.tsx`
-
-```typescript
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import type { Project } from "@/types/project";
-
-const priorityColour: Record<string, string> = {
-  critical: "bg-red-500",
-  high:     "bg-orange-500",
-  medium:   "bg-yellow-500",
-  low:      "bg-green-500",
-};
-
-const statusColour: Record<string, string> = {
-  active:   "bg-blue-500",
-  blocked:  "bg-red-600",
-  complete: "bg-green-600",
-  paused:   "bg-slate-400",
-};
-
-interface Props {
-  project: Project;
-}
-
-export function ProjectCard({ project }: Props) {
-  return (
-    <Card className="border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-base font-semibold text-slate-800 leading-snug">
-            {project.name}
-          </CardTitle>
-          <div className="flex flex-col gap-1 items-end shrink-0">
-            <span className={`text-[10px] font-bold text-white px-2 py-0.5 rounded-full ${priorityColour[project.priority]}`}>
-              {project.priority.toUpperCase()}
-            </span>
-            <span className={`text-[10px] font-bold text-white px-2 py-0.5 rounded-full ${statusColour[project.status]}`}>
-              {project.status.toUpperCase()}
-            </span>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-2 text-sm text-slate-600">
-        <p className="text-xs text-slate-400 font-mono">{project.stack}</p>
-        <p><span className="font-medium text-slate-700">Next: </span>{project.nextStep}</p>
-        <div className="flex flex-wrap gap-1 pt-1">
-          {project.agents.map((agent) => (
-            <Badge key={agent} variant="secondary" className="text-[10px]">
-              {agent.split("(")[0].trim()}
-            </Badge>
-          ))}
-        </div>
-        {project.repo && (
-          <a
-            href={project.repo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-xs text-blue-500 hover:underline truncate pt-1"
-          >
-            {project.repo.replace("https://", "")}
-          </a>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
-```
-
-### `src/components/Dashboard.tsx`
-
-```typescript
-import { parseMaster } from "@/lib/parseMaster";
-import { ProjectCard } from "@/components/ProjectCard";
-
-async function getMasterData() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
-  const res = await fetch(`${baseUrl}/api/master`, { next: { revalidate: 60 } });
-  if (!res.ok) throw new Error("Failed to fetch Master.md");
-  const { raw } = await res.json();
-  return parseMaster(raw);
-}
-
-export async function Dashboard() {
-  const data = await getMasterData();
-  const topProjects = data.projects.slice(0, 5);
-
-  return (
-    <main className="min-h-screen bg-slate-50 p-6 md:p-10">
-      {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="text-2xl">🛸</span>
-          <h1 className="text-2xl font-bold text-slate-800">Namka Control</h1>
-        </div>
-        <p className="text-sm text-slate-500">
-          Phase {data.phase.current} — {data.phase.label} &nbsp;·&nbsp;
-          Master.md v{data.version} &nbsp;·&nbsp;
-          Updated {data.lastUpdated}
-        </p>
-      </div>
-
-      {/* Project Grid */}
-      <section>
-        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">
-          Focus Projects ({topProjects.length})
-        </h2>
-        {topProjects.length === 0 ? (
-          <p className="text-slate-400 text-sm">No projects found in Master.md.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {topProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* Footer */}
-      <footer className="mt-12 text-xs text-slate-400 text-center">
-        Data sourced live from Master.md via GitHub API · Namka Control · {data.lastUpdated}
-      </footer>
-    </main>
-  );
-}
-```
-
----
-
-## 📦 Step 9 — Root Layout & Page
-
-### `src/app/layout.tsx`
-
-```typescript
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Namka Control",
-  description: "AI-assisted project management dashboard — Ali Mora",
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
-}
-```
-
-### `src/app/page.tsx`
-
-```typescript
-import { Dashboard } from "@/components/Dashboard";
-
-export default function Home() {
-  return <Dashboard />;
-}
-```
-
----
-
-## 📦 Step 10 — Local Verification
-
-```bash
-# Run dev server
-npm run dev
-```
-
-Open `http://localhost:3000` and confirm:
-
-- [ ] Page loads without errors.
-- [ ] Header shows correct version and date from Master.md.
-- [ ] At least 1 project card renders with name, status, priority, next step, and agents.
-- [ ] No TypeScript errors (`npx tsc --noEmit`).
-- [ ] No ESLint errors (`npm run lint`).
-
-If the API route returns a 500, check that `.env.local` has a valid `GITHUB_TOKEN`.
-
----
-
-## 📦 Step 11 — Commit & Push
-
-Once local verification passes, commit in two logical groups:
-
-```bash
-# Group 1: Environment and config files
-git add .env.example .gitignore next.config.ts tsconfig.json tailwind.config.ts postcss.config.mjs package.json package-lock.json
-git commit -m "chore: scaffold Next.js 15 config, env example, and dependencies"
-
-# Group 2: Application source
-git add src/
-git commit -m "feat: Phase 1 foundation — GitHub API, Master.md parser, dashboard UI"
-
-# Push both
-git push origin main
-```
-
-> ✅ Expected result: CI runs, bumps version to 1.0.3 (or 1.0.4 depending on how many pushes Step 1 generated), appends two entries to AI_CHANGELOG.md.
-
----
-
-## ✅ Success Criteria
-
-AG's work on this update is complete when ALL of the following are true:
-
-| # | Criterion | How to verify |
+| File | Purpose | Who Updates |
 |---|---|---|
-| 1 | CI workflow upgraded and AI_CHANGELOG.md created | Check GitHub Actions tab — first run passed |
-| 2 | Next.js 15 app runs locally on port 3000 | `npm run dev` — no errors |
-| 3 | `/api/master` returns raw Master.md content | `curl http://localhost:3000/api/master` |
-| 4 | Dashboard renders at least 1 project card | Browser — `http://localhost:3000` |
-| 5 | Version and date visible in dashboard header | Matches Master.md header |
-| 6 | `.env.example` committed, `.env.local` NOT committed | `git ls-files | grep env` — only `.env.example` |
-| 7 | No TypeScript errors | `npx tsc --noEmit` exits 0 |
-| 8 | No ESLint errors | `npm run lint` exits 0 |
-| 9 | All commits pushed to `main` | GitHub repo shows latest commits |
-| 10 | Review Log updated in Master.md | See instructions below |
+| `README.md` | Human-facing intro. Quick links. AI onboarding pointer. | AG (once, rarely changes) |
+| `Master.md` | Ground truth. Goals, stack, phases, MACP roles, review log. | Comet / Claude per session |
+| `AI_CHANGELOG.md` | Auto-prepended log of every push. Version + commit. | GitHub Actions (auto) |
+| `PROJECT-SYNC.json` | Machine-readable snapshot for Namka Control Dashboard. | GitHub Actions (auto) |
 
 ---
 
-## 📝 Review Log Entry (AG must append to Master.md before closing)
+## 📦 PROJECT-SYNC.json — Decided Schema
 
-Add the following entry to the Review Log section in `Master.md`:
+This schema is used for all 7 repos. Complete enough for the Dashboard to render rich project cards with zero markdown parsing required.
 
-```markdown
-### Session Review — 2026-03-29 — Session 4
-**Agent:** Antigravity (AG) | **Status:** Completed | **Topic:** Phase 1 Foundation Scaffold
+```json
+{
+  "project": "Project Display Name",
+  "repo": "AliMora83/repo-name",
+  "branch": "main",
+  "stack": "TypeScript / Next.js 15 / Tailwind CSS",
+  "status": "Active",
+  "priority": 1,
+  "priority_label": "🔴 Priority 1 — Ship Now",
+  "progress_percent": 75,
+  "progress_label": "Phase 2 complete",
+  "current_phase": "Phase 3",
+  "next_step": "Description of next action",
+  "blocker": null,
+  "live_url": "https://example.namka.cloud",
+  "deploy_target": "Hostinger VPS · Docker · Nginx",
+  "agents": ["Claude", "Comet"],
+  "version": "1.0.10",
+  "last_push": {
+    "timestamp": "2026-03-31T10:22:00Z",
+    "actor": "AliMora83",
+    "commit_message": "feat: description",
+    "sha": "a3f9c12"
+  },
+  "last_updated": "2026-03-31"
+}
+```
 
-#### Work Completed This Session
-- ✅ CI workflow committed — version bump and AI_CHANGELOG.md now live.
-- ✅ Next.js 15 app scaffolded at repo root (App Router, TypeScript, Tailwind, shadcn/ui).
-- ✅ GitHub API route created — fetches Master.md with 60s ISR revalidation.
-- ✅ Master.md parser implemented — extracts version, date, projects, reviews, and current phase.
-- ✅ ProjectCard and Dashboard components built and rendering live data.
-- ✅ .env.example committed. .env.local excluded from git.
-- ✅ All TypeScript and ESLint checks pass.
+> **Dashboard note:** Namka Control's `/api/projects` route (Part 3, issued separately) will fetch all 7 `PROJECT-SYNC.json` files in parallel via the GitHub Contents API. Same auth pattern as `Master.md`. No new secrets required.
 
-#### Recommendations
-- Hand off to Gemini for dashboard UI review and Phase 2 architecture planning.
-- Consider adding error boundary to Dashboard component for API failure states.
+---
+
+## 🔄 Reusable Workflow Template: `generate-project-sync.yml`
+
+This is the base workflow AG adapts for each repo. The only things that change between repos are the JSON field values and the branch name.
+
+```yaml
+name: Generate PROJECT-SYNC.json
+
+on:
+  push:
+    branches:
+      - main   # ← Change to 'master' for Odoo-POS-Terminal only
+
+permissions:
+  contents: write
+
+jobs:
+  generate-project-sync:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate PROJECT-SYNC.json
+        run: |
+          TIMESTAMP=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+          TODAY=$(date -u '+%Y-%m-%d')
+          ACTOR="${{ github.actor }}"
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          SHORT_SHA="${{ github.sha }}"
+          SHORT_SHA="${SHORT_SHA:0:7}"
+          VERSION=$(grep -oP 'Version: \K[0-9]+\.[0-9]+\.[0-9]+' Master.md 2>/dev/null || echo "0.0.0")
+
+          # ↓↓↓ AG: Replace the JSON values below for each repo ↓↓↓
+          cat > PROJECT-SYNC.json << ENDJSON
+          {
+            "project": "REPLACE_PROJECT_NAME",
+            "repo": "AliMora83/REPLACE_REPO",
+            "branch": "main",
+            "stack": "REPLACE_STACK",
+            "status": "REPLACE_STATUS",
+            "priority": 0,
+            "priority_label": "REPLACE_PRIORITY_LABEL",
+            "progress_percent": 0,
+            "progress_label": "REPLACE_PROGRESS_LABEL",
+            "current_phase": "REPLACE_PHASE",
+            "next_step": "REPLACE_NEXT_STEP",
+            "blocker": null,
+            "live_url": "REPLACE_LIVE_URL_OR_NULL",
+            "deploy_target": "REPLACE_DEPLOY_TARGET",
+            "agents": ["REPLACE_AGENTS"],
+            "version": "$VERSION",
+            "last_push": {
+              "timestamp": "$TIMESTAMP",
+              "actor": "$ACTOR",
+              "commit_message": "$COMMIT_MSG",
+              "sha": "$SHORT_SHA"
+            },
+            "last_updated": "$TODAY"
+          }
+          ENDJSON
+
+          sed -i 's/^          //' PROJECT-SYNC.json
+          echo "PROJECT-SYNC.json generated."
+
+      - name: Commit PROJECT-SYNC.json
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git diff --quiet PROJECT-SYNC.json || (
+            git add PROJECT-SYNC.json &&
+            git commit -m "chore: update PROJECT-SYNC.json [skip ci]" &&
+            git push
+          )
 ```
 
 ---
 
-*AG-Update.md authored by Claude — UX & Product Owner — 2026-03-29*
-*Next handoff: Gemini (dashboard UI verification) → Phase 2 planning*
+## 🚀 PART 1 — namka-control (Execute First)
+
+### Step 1 — Create `PROJECT-SYNC.json` placeholder at repo root
+
+```json
+{
+  "project": "Namka Control Dashboard",
+  "repo": "AliMora83/namka-control",
+  "branch": "main",
+  "stack": "TypeScript / Next.js 15 / Tailwind CSS / shadcn/ui / GitHub API / Gemini API",
+  "status": "Active",
+  "priority": 1,
+  "priority_label": "🔴 Priority 1 — Ship Now",
+  "progress_percent": 70,
+  "progress_label": "Phase 2 complete — Phase 3 not started",
+  "current_phase": "Phase 3",
+  "next_step": "Caching, zero-downtime deploy, error boundaries",
+  "blocker": null,
+  "live_url": "https://control.namka.cloud",
+  "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
+  "agents": ["Claude", "Comet", "Gemini", "AG"],
+  "version": "1.0.10",
+  "last_push": {
+    "timestamp": "",
+    "actor": "",
+    "commit_message": "placeholder — overwritten by workflow on next push",
+    "sha": ""
+  },
+  "last_updated": "2026-03-31"
+}
+```
+
+### Step 2 — Create `.github/workflows/generate-project-sync.yml`
+Use the reusable template above with namka-control values filled in (they match Step 1).
+
+### Step 3 — Verify
+- [ ] Workflow green in Actions tab
+- [ ] `PROJECT-SYNC.json` committed by `github-actions[bot]`
+- [ ] Raw URL returns valid JSON:
+  `https://raw.githubusercontent.com/AliMora83/namka-control/main/PROJECT-SYNC.json`
+- [ ] **Report back to Claude before proceeding to Part 2**
+
+---
+
+## 🚀 PART 2 — Remaining 6 Repos
+
+> Execute in this order: **SmartPress → Atlas-Website → Kora-Tutor → EventSaaS → Odoo-POS-Terminal → Odoo-BA-API**
+
+---
+
+### Repo 1: SmartPress
+
+**Actions required:**
+1. Create `AI_CHANGELOG.md` (template below)
+2. Create `.github/workflows/generate-project-sync.yml`
+3. Update `AGENT-ONBOARDING.md` — replace all references to `Namka-Mission-Control` with `namka-control`
+
+**`AI_CHANGELOG.md` template (same for all repos):**
+```markdown
+# AI Changelog — [Project Name]
+
+> Auto-maintained by GitHub Actions. Each entry reflects a versioned push.
+> Newest entries appear first. Do not edit manually.
+
+---
+
+*Awaiting first workflow run.*
+```
+
+**PROJECT-SYNC.json values:**
+```json
+{
+  "project": "SmartPress",
+  "repo": "AliMora83/SmartPress",
+  "branch": "main",
+  "stack": "TypeScript / Next.js 15 / Python / FastAPI / FFmpeg / Tailwind CSS",
+  "status": "Active",
+  "priority": 2,
+  "priority_label": "🟡 Priority 2 — Active Development",
+  "progress_percent": 60,
+  "progress_label": "MVP core complete — pending deploy",
+  "current_phase": "Phase 1 — MVP Stabilisation",
+  "next_step": "FFmpeg pipeline stability validation · Error handling for unsupported formats",
+  "blocker": null,
+  "live_url": null,
+  "deploy_target": "Vercel (frontend) · Docker + Google Cloud Run (backend)",
+  "agents": ["Claude", "Comet"]
+}
+```
+
+---
+
+### Repo 2: Atlas-Website
+
+**Actions required:**
+1. Create `AI_CHANGELOG.md`
+2. Create `AGENT-ONBOARDING.md` (template below)
+3. Create `.github/workflows/generate-project-sync.yml`
+4. Create `.github/workflows/update-master-date.yml` (copy from namka-control exactly — `Master.md` already exists)
+
+**`AGENT-ONBOARDING.md` template (adapt name/links for each repo):**
+```markdown
+# 🤖 Agent Onboarding — [Project Name]
+
+> Read this before doing **any** work in this repo.
+
+---
+
+## Step 1 — Read These Files First (in order)
+
+1. `Master.md` — full project context, stack, phases, decisions
+2. `AI_CHANGELOG.md` — what changed recently and current version
+3. namka-control `Master.md` — MACP protocol and portfolio overview
+
+**Raw URLs:**
+- `https://raw.githubusercontent.com/AliMora83/[REPO]/main/Master.md`
+- `https://raw.githubusercontent.com/AliMora83/[REPO]/main/AI_CHANGELOG.md`
+- `https://raw.githubusercontent.com/AliMora83/namka-control/main/Master.md`
+
+---
+
+## Step 2 — Agent Roles
+
+| Agent | Role |
+|---|---|
+| **Claude** | UX review, product decisions, issues AG-Update.md |
+| **Comet** | Research, audit, documentation |
+| **Gemini** | Architecture, UI proposals |
+| **AG (Antigravity)** | Implementation only — executes AG-Update.md |
+
+---
+
+## Step 3 — Rules
+
+- Do not commit code without an AG-Update.md from Claude
+- Do not modify `Master.md` during implementation — Comet and Claude own it
+- Add a review log entry to `Master.md` at the end of your session
+- Check `AI_CHANGELOG.md` for current version before starting work
+
+---
+
+*Part of the [Namka Control](https://github.com/AliMora83/namka-control) portfolio.*
+```
+
+**PROJECT-SYNC.json values:**
+```json
+{
+  "project": "Atlas Conference Website",
+  "repo": "AliMora83/Atlas-Website",
+  "branch": "main",
+  "stack": "TypeScript / Next.js / Tailwind CSS / sharp",
+  "status": "Active",
+  "priority": 2,
+  "priority_label": "🟡 Priority 2 — Active Development",
+  "progress_percent": 90,
+  "progress_label": "90% complete",
+  "current_phase": "Content Completion",
+  "next_step": "Review /src page structure · Complete remaining content sections",
+  "blocker": null,
+  "live_url": "https://atlasconference.africa",
+  "deploy_target": "Netlify (atlasglobal26)",
+  "agents": ["Comet"]
+}
+```
+
+---
+
+### Repo 3: Kora-Tutor
+
+**Actions required:**
+1. ⚠️ Rename `Kora-Master.md` → `Master.md` and update all README links
+2. Create `AI_CHANGELOG.md`
+3. Create `AGENT-ONBOARDING.md`
+4. Create `.github/workflows/generate-project-sync.yml`
+5. Create `.github/workflows/update-master-date.yml` — **verify** renamed `Master.md` contains `Version: X.Y.Z` and `Last updated: YYYY-MM-DD` fields before deploying
+
+**Rename command:**
+```bash
+git mv Kora-Master.md Master.md
+git commit -m "refactor: rename Kora-Master.md to Master.md for MACP standardisation"
+```
+Then update `README.md` — replace all occurrences of `Kora-Master.md` with `Master.md`.
+
+**PROJECT-SYNC.json values:**
+```json
+{
+  "project": "Kora Tutor",
+  "repo": "AliMora83/Kora-Tutor",
+  "branch": "main",
+  "stack": "TypeScript / Next.js 14+ / Firebase / Gemini 1.5 Flash / Google Cloud TTS / WaveSurfer.js / GSAP",
+  "status": "In Progress",
+  "priority": 2,
+  "priority_label": "🟡 Priority 2 — Active Development",
+  "progress_percent": 30,
+  "progress_label": "Sprint 2 active",
+  "current_phase": "Sprint 2 (Mar 30 – Apr 12)",
+  "next_step": "SVG mouth animations + WaveSurfer.js waveform rendering",
+  "blocker": null,
+  "live_url": null,
+  "deploy_target": "Vercel + Firebase",
+  "agents": ["Claude", "Comet"]
+}
+```
+
+---
+
+### Repo 4: EventSaaS
+
+**Actions required:**
+1. Create `Master.md` (content below)
+2. Create `AI_CHANGELOG.md`
+3. Create `AGENT-ONBOARDING.md`
+4. Create `.github/workflows/generate-project-sync.yml`
+5. Create `.github/workflows/update-master-date.yml`
+6. Do **not** modify `.agent/` folder or existing workflows
+
+**`Master.md` content:**
+```markdown
+# EventSaaS — Production Management Platform
+
+> Owner: Ali Mora | Location: Johannesburg, ZA
+> Last updated: 2026-03-31 | Version: 1.0.0
+
+## 🎯 Mission
+
+Replace fragmented spreadsheets, WhatsApps, and email chains in South African event production workflows. One platform from first budget estimate to final load-out.
+
+## 🏗 Stack
+
+- Frontend: React 18 / TypeScript / Vite
+- Styling: Tailwind CSS v4 (warm neutral design system)
+- State: Zustand
+- Backend / DB: Firebase Auth · Firestore · Storage
+- AI: Google Gemini (layout suggestions, budget insights)
+- PDF: @react-pdf/renderer
+- Canvas: HTML5 Canvas (2D) · Three.js (Phase 3 planned)
+- Deployment: Hostinger VPS · Nginx · GitHub Actions CI/CD
+
+## 📋 Build Phases
+
+### Phase 1 ✅ COMPLETE
+- [x] Dashboard · Budget Hub · Inventory Manager
+- [x] Timeline & Crew · Client Proposals · Visual Engine (2D)
+- [x] Deployed to eventsaas.namka.cloud
+
+### Phase 2 🔄 Not Started
+- [ ] Xero invoice sync
+- [ ] Resend email automation
+- [ ] PDF export polish
+- [ ] 3D floor plan preview (Three.js)
+
+### Phase 3 — Planned
+- [ ] Mobile PWA + offline mode
+- [ ] Advanced AI budgeting
+- [ ] Multi-org white-label
+
+## 👥 Agent Assignments
+
+| Agent | Role |
+|---|---|
+| TBC | Implementation |
+
+## 📋 Review Log
+
+*No entries yet.*
+```
+
+**PROJECT-SYNC.json values:**
+```json
+{
+  "project": "EventSaaS",
+  "repo": "AliMora83/EventSaas",
+  "branch": "main",
+  "stack": "React 18 / TypeScript / Vite / Tailwind CSS v4 / Zustand / Firebase / Gemini AI",
+  "status": "Active",
+  "priority": 2,
+  "priority_label": "🟡 Priority 2 — Active Development",
+  "progress_percent": 50,
+  "progress_label": "Phase 1 deployed — Phase 2 not started",
+  "current_phase": "Phase 2 Planning",
+  "next_step": "Xero invoice sync · Resend email automation · PDF export polish · 3D preview",
+  "blocker": null,
+  "live_url": "https://eventsaas.namka.cloud",
+  "deploy_target": "Hostinger VPS · Nginx · GitHub Actions CI/CD",
+  "agents": ["TBC"]
+}
+```
+
+---
+
+### Repo 5: Odoo-POS-Terminal
+
+**Actions required:**
+1. Create `Master.md` (content below)
+2. Create `AI_CHANGELOG.md`
+3. Create `AGENT-ONBOARDING.md`
+4. Create `.github/workflows/generate-project-sync.yml` — **branch: master**
+5. Create `.github/workflows/update-master-date.yml` — **branch: master**
+
+**`Master.md` content:**
+```markdown
+# Odoo POS Terminal
+
+> Owner: Ali Mora | Location: Johannesburg, ZA
+> Last updated: 2026-03-31 | Version: 1.0.0
+
+## 🎯 Mission
+
+Custom hardware POS terminal bridging an ESP32 microcontroller to Odoo POS via a FastAPI middleware layer. Replaces off-the-shelf POS hardware with a bespoke PCBA.
+
+## 🏗 Stack
+
+- Hardware: ESP32 (FreeRTOS)
+- Middleware: FastAPI (Python) — hosted on Hostinger VPS
+- POS Integration: Odoo JSON-RPC
+- PCB Design: EasyEDA
+- PCB Manufacturing: PCBWay PCBA
+- Deployment: Hostinger VPS (FastAPI) · Odoo.sh (POS + Accounting)
+
+## 📋 Build Phases
+
+### Phase 1 🔄 In Progress — 20%
+- [x] FastAPI scaffold — /health endpoint created
+- [ ] Additional API endpoints (order sync, payment confirmation)
+- [ ] ESP32 firmware scaffold
+- [ ] Odoo JSON-RPC integration
+- [ ] PCB design finalised in EasyEDA
+- [ ] PCBA order placed with PCBWay
+
+## 👥 Agent Assignments
+
+| Agent | Role |
+|---|---|
+| Claude | Architecture |
+| Qwen | Build / Python |
+| Comet | Cross-check |
+
+## 📋 Review Log
+
+*No entries yet.*
+```
+
+**PROJECT-SYNC.json values:**
+```json
+{
+  "project": "Odoo POS Terminal",
+  "repo": "AliMora83/Odoo-POS-Terminal",
+  "branch": "master",
+  "stack": "ESP32 (FreeRTOS) / FastAPI / Odoo JSON-RPC / Python / EasyEDA / PCBWay PCBA",
+  "status": "In Progress",
+  "priority": 1,
+  "priority_label": "🔴 Priority 1 — Ship Now",
+  "progress_percent": 20,
+  "progress_label": "20% — FastAPI scaffold in progress",
+  "current_phase": "Phase 1",
+  "next_step": "Additional FastAPI endpoints · ESP32 firmware · Odoo JSON-RPC integration",
+  "blocker": null,
+  "live_url": "https://namka.cloud",
+  "deploy_target": "Hostinger VPS (FastAPI) · Odoo.sh (POS + Accounting)",
+  "agents": ["Claude", "Qwen", "Comet"]
+}
+```
+
+---
+
+### Repo 6: Odoo-BA-API
+
+**Actions required:**
+1. **Audit the repo root first** — list all files and report back before creating anything
+2. Create any missing files from: `Master.md`, `AI_CHANGELOG.md`, `AGENT-ONBOARDING.md`, `.github/workflows/`
+3. Use the same templates above
+
+**PROJECT-SYNC.json values:**
+```json
+{
+  "project": "Bridging Africa Odoo API",
+  "repo": "AliMora83/Odoo-BA-API",
+  "branch": "main",
+  "stack": "Python 3.11+ / Odoo 19.0 / PostgreSQL / Odoo.sh",
+  "status": "Active — Maintenance",
+  "priority": 3,
+  "priority_label": "🟢 Priority 3 — Client / Maintenance",
+  "progress_percent": 65,
+  "progress_label": "Phase 3 complete — Phase 4 not started",
+  "current_phase": "Phase 4 Planning",
+  "next_step": "Accounting Refinement — invoice layout + payment reconciliation",
+  "blocker": null,
+  "live_url": "https://bridging-africa.com",
+  "deploy_target": "Odoo.sh (bridging-africa-sh) · GitHub → Odoo.sh integration",
+  "agents": ["TBC"]
+}
+```
+
+---
+
+## 📡 PART 3 — Dashboard API (Separate Work Order)
+
+> Do not implement until all 7 repos confirm `PROJECT-SYNC.json` is live.
+> Claude will issue Part 3 as a standalone `AG-Update.md`.
+
+**Preview of what Part 3 will contain:**
+- New `/api/projects` route — fetches all 7 `PROJECT-SYNC.json` files in parallel
+- Dashboard project cards driven by live JSON (replacing manual `Active-Projects.md` parsing)
+- Activity feed showing `last_push` across all 7 projects sorted by timestamp
+- Error boundary handling for any repo that fails to return valid JSON
+
+---
+
+## ✅ Completion Checklist
+
+### Part 1 — namka-control
+- [ ] `PROJECT-SYNC.json` placeholder created at repo root
+- [ ] `generate-project-sync.yml` workflow created
+- [ ] Workflow runs green in Actions tab
+- [ ] Raw JSON URL confirmed accessible
+- [ ] **Notify Claude: "Part 1 complete"**
+
+### Part 2 — 6 Repos (confirm each)
+- [ ] SmartPress — `AI_CHANGELOG.md` created · `PROJECT-SYNC.json` workflow live · `AGENT-ONBOARDING.md` updated
+- [ ] Atlas-Website — All 4 files created · both workflows live
+- [ ] Kora-Tutor — `Kora-Master.md` renamed · all 4 files · both workflows live
+- [ ] EventSaaS — `Master.md` created · all 4 files · both workflows live
+- [ ] Odoo-POS-Terminal — `Master.md` created · all 4 files · workflows targeting `master` branch
+- [ ] Odoo-BA-API — Audited · all missing files created · workflows live
+- [ ] **Notify Claude: "Part 2 complete — all 6 repos confirmed"**
+
+---
+
+## 🚫 Out of Scope
+
+- Do not modify any application code in any repo
+- Do not modify or delete `deploy.yml` or any existing deployment workflows
+- Do not delete the `.agent/` folder in EventSaaS
+- Do not restructure the `docs/` folder in Odoo-POS-Terminal
+- Part 3 (Dashboard API) will be a separate AG-Update.md from Claude
+
+---
+
+*Issued by Claude — UX & Product Owner | MACP v2.0 | 2026-03-31*
