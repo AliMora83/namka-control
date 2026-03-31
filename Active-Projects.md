@@ -113,7 +113,7 @@
 
 | Field | Value |
 |---|---|
-| **Project Name** | EventSaaS — Production Management Platform |
+| **Project Name** | EventSaaS |
 | **Repo** | https://github.com/AliMora83/EventSaas |
 | **Stack** | React 18 / TypeScript / Vite / Tailwind CSS v4 / Zustand / Firebase / Gemini AI / @react-pdf/renderer / Recharts / HTML5 Canvas |
 | **Status** | Active |
