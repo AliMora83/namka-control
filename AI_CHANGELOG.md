@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.24 — 2026-03-31
+- fix: remove duplicate Phase prefix in footer label
+
+\
+## v1.0.24 — 2026-03-31\n- fix: remove duplicate Phase prefix in footer label\n
 ## v1.0.23 — 2026-03-31
 - fix: restore Active-Projects.md dual-fetch after design rewrite
 
