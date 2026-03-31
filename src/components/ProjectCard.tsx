@@ -1,64 +1,101 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import type { Project } from "@/types/project";
+import type { Project } from '@/types/project'
+import { Badge } from './Badge'
+import { StatusLabel } from './StatusLabel'
 
-const priorityColour: Record<string, string> = {
-  critical: "bg-red-500",
-  high:     "bg-orange-500",
-  medium:   "bg-yellow-500",
-  low:      "bg-green-500",
-};
-
-const statusColour: Record<string, string> = {
-  active:   "bg-blue-500",
-  blocked:  "bg-red-600",
-  complete: "bg-green-600",
-  paused:   "bg-slate-400",
-};
-
-interface Props {
-  project: Project;
+interface ProjectCardProps {
+  project: Project
+  index: number
 }
 
-export function ProjectCard({ project }: Props) {
+export function ProjectCard({ project, index }: ProjectCardProps) {
+  const cardClass = [
+    'project-card',
+    project.blocker ? 'has-blocker' : '',
+    project.status === 'Stale' || project.status === 'paused' ? 'stale' : '',
+    project.status === 'Done' || project.status === 'complete' ? 'done' : '',
+  ].filter(Boolean).join(' ')
+
   return (
-    <Card className="border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-base font-semibold text-slate-800 leading-snug">
+    <div className={cardClass}>
+      {/* Card header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
+          <span className="card-number" style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 10,
+            color: 'var(--ink-dim)',
+            flexShrink: 0,
+          }}>
+            {index}.
+          </span>
+          <span style={{
+            fontFamily: 'var(--font-sans)',
+            fontWeight: 700,
+            fontSize: 'var(--text-md)',
+            color: 'var(--ink)',
+            lineHeight: 1.3,
+          }}>
             {project.name}
-          </CardTitle>
-          <div className="flex flex-col gap-1 items-end shrink-0">
-            <span className={`text-[10px] font-bold text-white px-2 py-0.5 rounded-full ${priorityColour[project.priority]}`}>
-              {project.priority.toUpperCase()}
-            </span>
-            <span className={`text-[10px] font-bold text-white px-2 py-0.5 rounded-full ${statusColour[project.status]}`}>
-              {project.status.toUpperCase()}
-            </span>
-          </div>
+          </span>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-2 text-sm text-slate-600">
-        <p className="text-xs text-slate-400 font-mono">{project.stack}</p>
-        <p><span className="font-medium text-slate-700">Next: </span>{project.nextStep}</p>
-        <div className="flex flex-wrap gap-1 pt-1">
-          {project.agents.map((agent) => (
-            <Badge key={agent} variant="secondary" className="text-[10px]">
-              {agent.split("(")[0].trim()}
-            </Badge>
+        <span style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: 11,
+          color: 'var(--ink-placeholder)',
+          flexShrink: 0,
+          paddingLeft: 4,
+        }}>
+          Open →
+        </span>
+      </div>
+
+      {/* Stack */}
+      <p className="card-stack" style={{
+        fontSize: 'var(--text-sm)',
+        color: 'var(--ink-dim)',
+        lineHeight: 1.6,
+        marginBottom: 10,
+      }}>
+        {project.stack}
+      </p>
+
+      {/* Blocker strip */}
+      {project.blocker && (
+        <div className="card-blocker">
+          <span>⚠</span>
+          <span>{project.blocker}</span>
+        </div>
+      )}
+
+      {/* Next step */}
+      <p style={{
+        fontFamily: 'var(--font-sans)',
+        fontSize: 'var(--text-base)',
+        color: 'var(--ink-mid)',
+        lineHeight: 1.55,
+        flexGrow: 1,
+        marginBottom: 14,
+      }}>
+        {project.nextStep}
+      </p>
+
+      {/* Footer: badges + status */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: 6,
+        marginTop: 'auto',
+      }}>
+        <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+          {project.effort && <Badge type="effort" value={project.effort} />}
+          {project.agents?.map(agent => (
+            <Badge key={agent} type="agent" value={agent.split('(')[0].trim()} />
           ))}
         </div>
-        {project.repo && (
-          <a
-            href={project.repo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-xs text-blue-500 hover:underline truncate pt-1"
-          >
-            {project.repo.replace("https://", "")}
-          </a>
-        )}
-      </CardContent>
-    </Card>
-  );
+        <StatusLabel status={project.status} />
+      </div>
+    </div>
+  )
 }

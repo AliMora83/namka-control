@@ -1,5 +1,5 @@
 export type Priority = "critical" | "high" | "medium" | "low";
-export type ProjectStatus = "active" | "blocked" | "complete" | "paused";
+export type ProjectStatus = "active" | "blocked" | "complete" | "paused" | "Active" | "Done" | "Stale" | "Review" | string;
 
 export interface Project {
   id: string;
@@ -8,10 +8,19 @@ export interface Project {
   stack: string;
   status: ProjectStatus;
   priority: Priority;
+  /** Numeric priority alias: 1 = P1, 2 = P2, 3 = P3, 4 = P4 */
+  priorityNum?: number;
   nextStep: string;
   lastCommit: string;
   agents: string[];
-  progress?: string;
+  /** Progress percentage — may be a number (0-100) or a string like "65%" */
+  progress?: string | number;
+  /** Blocker description, if any */
+  blocker?: string;
+  /** Effort sizing: S | M | L | XL */
+  effort?: string;
+  liveUrl?: string;
+  lastUpdated?: string;
 }
 
 export interface ReviewEntry {
