@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.26 — 2026-03-31
+- feat: implement portfolio-wide aggregation API and update dashboard UI
+
+\
+## v1.0.26 — 2026-03-31\n- feat: implement portfolio-wide aggregation API and update dashboard UI\n
 ## v1.0.25 — 2026-03-31
 - Update Active-Projects.md
 
