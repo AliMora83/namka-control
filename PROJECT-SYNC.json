@@ -1,25 +1,27 @@
 {
   "project": "Namka Control Dashboard",
-  "repo": "AliMora83/namka-control",
+  "repo": "AliMora83/namka-control-dashboard",
   "branch": "main",
-  "stack": "TypeScript / Next.js 15 / Tailwind CSS / shadcn/ui / GitHub API / Gemini API",
+  "stack": "TypeScript / Next.js / Tailwind",
   "status": "Active",
-  "priority": 1,
-  "priority_label": "🔴 Priority 1 — Ship Now",
-  "progress_percent": 70,
-  "progress_label": "Phase 2 complete — Phase 3 not started",
-  "current_phase": "Phase 3",
-  "next_step": "Caching, zero-downtime deploy, error boundaries",
+  "priority": 2,
+  "priority_label": "🟡 Priority 2 — Active Development",
+  "progress_percent": 50,
+  "progress_label": "Development in progress",
+  "current_phase": "Phase 1",
+  "next_step": "See Master.md",
   "blocker": null,
-  "live_url": "https://control.namka.cloud",
-  "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
-  "agents": ["Claude", "Comet", "Gemini", "AG"],
+  "live_url": null,
+  "deploy_target": "Hostinger VPS",
+  "agents": [
+    "AG"
+  ],
   "version": "1.0.24",
   "last_push": {
-    "timestamp": "2026-03-31T21:38:50Z",
+    "timestamp": "2026-03-31T22:13:52.744Z",
     "actor": "AliMora83",
-    "commit_message": "chore: add PROJECT-SYNC.json and generation workflow",
-    "sha": "108976c"
+    "commit_message": "chore: update PROJECT-SYNC.json [skip ci]",
+    "sha": "8c02ffa"
   },
   "last_updated": "2026-03-31"
 }
