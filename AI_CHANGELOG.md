@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.25 — 2026-03-31
+- Update Active-Projects.md
+
+\
+## v1.0.25 — 2026-03-31\n- Update Active-Projects.md\n
 ## v1.0.24 — 2026-03-31
 - fix: remove duplicate Phase prefix in footer label
 
