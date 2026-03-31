@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.22 — 2026-03-31
+- Design update
+
+\
+## v1.0.22 — 2026-03-31\n- Design update\n
 ## v1.0.21 — 2026-03-30
 - docs: clean AI_CHANGELOG — remove malformed duplicate entries, close Phase 2 sprint
 
