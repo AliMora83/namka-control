@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.23 — 2026-03-31
+- fix: restore Active-Projects.md dual-fetch after design rewrite
+
+\
+## v1.0.23 — 2026-03-31\n- fix: restore Active-Projects.md dual-fetch after design rewrite\n
 ## v1.0.22 — 2026-03-31
 - Design update
 
