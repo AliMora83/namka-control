@@ -1,27 +1,25 @@
 {
   "project": "Namka Control Dashboard",
-  "repo": "AliMora83/namka-control-dashboard",
+  "repo": "AliMora83/namka-control",
   "branch": "main",
-  "stack": "TypeScript / Next.js / Tailwind",
+  "stack": "TypeScript / Next.js 15 / Tailwind CSS / shadcn/ui / GitHub API / Gemini API",
   "status": "Active",
-  "priority": 2,
-  "priority_label": "🟡 Priority 2 — Active Development",
-  "progress_percent": 50,
-  "progress_label": "Development in progress",
-  "current_phase": "Phase 1",
-  "next_step": "See Master.md",
+  "priority": 1,
+  "priority_label": "🔴 Priority 1 — Ship Now",
+  "progress_percent": 70,
+  "progress_label": "Phase 2 complete — Phase 3 not started",
+  "current_phase": "Phase 3",
+  "next_step": "Caching, zero-downtime deploy, error boundaries",
   "blocker": null,
-  "live_url": null,
-  "deploy_target": "Hostinger VPS",
-  "agents": [
-    "AG"
-  ],
-  "version": "1.0.24",
+  "live_url": "https://control.namka.cloud",
+  "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
+  "agents": ["Claude", "Comet", "Gemini", "AG"],
+  "version": "1.0.27",
   "last_push": {
-    "timestamp": "2026-03-31T22:13:52.744Z",
+    "timestamp": "2026-04-01T14:30:07Z",
     "actor": "AliMora83",
-    "commit_message": "chore: update PROJECT-SYNC.json [skip ci]",
-    "sha": "8c02ffa"
+    "commit_message": "docs(master): Session 7 review — Comet SmartPress audit + cross-project sync (2026-04-01)",
+    "sha": "b62cdb3"
   },
-  "last_updated": "2026-03-31"
+  "last_updated": "2026-04-01"
 }
