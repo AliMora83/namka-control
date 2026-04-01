@@ -1,6 +1,6 @@
 # 📂 Active Projects
 
-> Last updated: 2026-03-30 | Owner: Ali Mora | Source: Namka Control Dashboard
+> Last updated: 2026-04-01 | Owner: Ali Mora | Source: Namka Control Dashboard
 
 ---
 
@@ -62,10 +62,10 @@
 | **Assigned Agent** | Comet / Claude |
 | **Live URL** | TBC — Vercel (frontend) · Google Cloud Run (backend) |
 | **Deployment** | Vercel + Docker + Google Cloud Run |
-| **Next Step** | FFmpeg pipeline stability validation · Error handling for unsupported formats |
-| **Blocker** | None |
-| **Progress** | MVP core complete — pending deploy |
-| **Last Updated** | 2026-03-29 |
+| **Next Step** | Resolve Blocking Runtime Issue · AG smoke test (Base URL · Route · CORS · upload→compress→download) |
+| **Blocker** | 🚨 Blocking Runtime Issue: 4 integration checks pending (owner: AG) — see SmartPress-Update |
+| **Progress** | Phase 1 implementation complete — awaiting runtime verification · Comet audit pending approval |
+| **Last Updated** | 2026-04-01 |
 
 ---
 
