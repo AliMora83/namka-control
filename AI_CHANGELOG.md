@@ -2,6 +2,11 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.27 — 2026-04-01
+- docs(active-projects): update SmartPress — blocker, next step, progress, date (2026-04-01)
+
+\
+## v1.0.27 — 2026-04-01\n- docs(active-projects): update SmartPress — blocker, next step, progress, date (2026-04-01)\n
 ## v1.0.26 — 2026-03-31
 - feat: implement portfolio-wide aggregation API and update dashboard UI
 
