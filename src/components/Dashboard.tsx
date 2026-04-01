@@ -6,6 +6,7 @@ import { StatGrid } from "@/components/StatGrid";
 import { MACPStatus } from "@/components/MACPStatus";
 import { ErrorCard } from "@/components/ErrorCard";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { getAggregatedProjects } from "@/lib/getProjects";
 import type { Project } from "@/types/project";
 
 interface FetchResult {
@@ -37,23 +38,7 @@ async function getMasterData(): Promise<FetchResult> {
   }
 }
 
-async function getProjectsData(): Promise<{ projects: Project[]; errors: string[] }> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/projects`, { next: { revalidate: 60 } });
-    const json = await res.json();
-
-    if (!res.ok || json.error) {
-       console.error("Projects API error:", json.error);
-       return { projects: [], errors: [json.error || "Failed to fetch projects"] };
-    }
-
-    return { projects: json.projects, errors: json.errors || [] };
-  } catch (err) {
-    console.error("Projects Fetch error:", err);
-    return { projects: [], errors: ["Network error (Projects)"] };
-  }
-}
+// Data access moved to @/lib/getProjects and @/lib/parseMaster
 
 /** Maps the parser's priority string to a numeric tier (1–4) */
 function toPriorityNum(priority: string): number {
@@ -66,13 +51,13 @@ function toPriorityNum(priority: string): number {
 }
 
 export async function Dashboard() {
-  const [masterRes, projectsRes] = await Promise.all([
+  const [masterRes, projectsData] = await Promise.all([
     getMasterData(),
-    getProjectsData(),
+    getAggregatedProjects(),
   ]);
 
   const { data, error: masterError, detail: masterDetail } = masterRes;
-  const { projects: liveProjects, errors: projectErrors } = projectsRes;
+  const { projects: liveProjects, errors: projectErrors } = projectsData;
 
   // Use live projects if available, otherwise fallback to master data (legacy)
   const allProjects: Project[] = liveProjects.length > 0 

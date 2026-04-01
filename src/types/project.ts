@@ -21,6 +21,7 @@ export interface Project {
   effort?: string;
   liveUrl?: string;
   lastUpdated?: string;
+  version?: string;
 }
 
 export interface ReviewEntry {
