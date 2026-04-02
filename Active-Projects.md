@@ -36,7 +36,7 @@
 | **Stack** | ESP32 (FreeRTOS) / FastAPI (Antigravity) / Odoo JSON-RPC / Python / EasyEDA / PCBWay PCBA |
 | **Status** | In Progress |
 | **Priority** | 🔴 Priority 1 — Ship Now |
-| **Assigned Agent** | Claude (Architecture) · Qwen (Build/Python) · Comet (Cross-check) |
+| **Assigned Agent** | Claude (Architecture) · AG (Build/Python) · Comet (Cross-check) |
 | **Live URL** | https://namka.cloud (middleware API host) |
 | **Deployment** | Hostinger VPS (Antigravity FastAPI) · Odoo.sh (POS + Accounting) · PCBWay (PCBA) |
 | **Next Step** | Antigravity FastAPI scaffold in progress — /health endpoint created (Step 1 done) |
@@ -146,5 +146,5 @@
 | **Deployment** | Odoo.sh (bridging-africa-sh) · GitHub → Odoo.sh integration |
 | **Next Step** | Phase 4: Accounting Refinement (invoice layout + payment reconciliation) · Phase 5: Customer Portal |
 | **Blocker** | None |
-| **Progress** | Phase 3 (Helpdesk Integration) ✅ complete |
+| **Progress** | Phase 3 (Helpdesk Integration) On Hold |
 | **Last Updated** | 2026-03-24 |
