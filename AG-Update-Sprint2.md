@@ -6,41 +6,6 @@
 
 ---
 
-## Governance & Document Roles
-
-Namka Control uses a four-layer governance model to keep planning, approval, execution, and logging clearly separated:
-
-1. `Master-Update.md` — Planning & Review
-   - Draft architecture, proposed phases/sprints, and open questions.
-   - Owned by Ali and Claude, with Gemini and Comet as reviewers.
-   - May contain alternatives, comments, and incomplete ideas.
-
-2. `Master.md` — Approved Operating Truth
-   - Contains only approved decisions and approved phase/sprint scope.
-   - No unresolved alternatives or draft content.
-   - Updated only when a phase/sprint is explicitly marked Approved by Gemini and Comet.
-
-3. `AG-Update-*.md` — Execution Orders
-   - Concrete work orders for AG, derived only from content already approved and present in `Master.md`.
-   - Authored by Claude after approvals are recorded.
-
-4. `AI-Logs.md` — Execution Evidence
-   - Written by AG after execution.
-   - Records what changed, what passed/failed acceptance, and any blockers to feed back into `Master-Update.md`.
-
-### Promotion Rules
-
-- All new work starts in `Master-Update.md` as a proposed phase or sprint.
-- Gemini and Comet review and update `Master-Update.md` directly. Each phase/sprint must be explicitly marked as:
-  - `APPROVED`, `REJECTED`, or `NEEDS-REVISION`.
-- Only `APPROVED` phases/sprints are promoted into `Master.md`.
-- AG must never execute work that is not:
-  - Present in `Master.md`, and
-  - Covered by a corresponding `AG-Update-*.md` work order.
-
-MACP is treated as a governance and coordination layer. Supabase and `PROJECT-SYNC.json` are the runtime data sources for the Dashboard; `Master.md` and `Master-Update.md` govern how that runtime behavior is defined and evolved.
-
----
 
 ## ⚠️ Pre-conditions — All must be confirmed before starting
 
