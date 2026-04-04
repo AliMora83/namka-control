@@ -14,6 +14,19 @@ Streamline project management through AI-assisted development — providing real
 *   • MACP (Multi-Agent Coordination Protocol) uses this as the ground truth to cross-check agent reviews and prevent hallucinations.
 *   • The `Last updated` date and `Version` are auto-updated by GitHub Actions on every push to `main`.
 
+---
+
+## Governance Reference
+
+This file contains only approved architecture and phase/sprint scope.
+
+- All draft ideas and unapproved changes live in `Master-Update.md`.
+- Only items marked `APPROVED` in `Master-Update.md` are copied or promoted here.
+- AG must use `Master.md` (plus the current `AG-Update-*.md` work order) as the single source of truth for execution.
+- Any discrepancy between `Master-Update.md` and `Master.md` is resolved in favor of `Master.md` until a new approval cycle completes.
+
+---
+
 📜 Versioning & Change Log
 --------------------------
 
