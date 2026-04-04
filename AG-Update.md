@@ -9,6 +9,17 @@
 
 ---
 
+## 📌 AG-Update Meta
+
+- Phase: Phase X
+- Sprint: Sprint X
+- Issued by: Claude
+- Date: YYYY-MM-DD
+- Time: HH:MM SAST
+- Status: READY | IN PROGRESS | COMPLETE | BLOCKED
+
+---
+
 ## 🔍 Audit Results — What Exists vs. What's Needed
 
 | Repo | Branch | README | Master.md | AI_CHANGELOG | AGENT-ONBOARDING | Workflows | PROJECT-SYNC.json |
