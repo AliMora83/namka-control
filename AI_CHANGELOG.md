@@ -2,6 +2,15 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.29 — 2026-04-04
+- Add governance reference to Master.md
+
+Added governance reference section to clarify approval process.
+
+\
+## v1.0.29 — 2026-04-04\n- Add governance reference to Master.md\
+\
+Added governance reference section to clarify approval process.\n
 ## v1.0.28 — 2026-04-04
 - Remove governance roles and promotion rules section
 
