@@ -14,14 +14,12 @@
   "live_url": "https://control.namka.cloud",
   "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
   "agents": ["Claude", "Comet", "Gemini", "AG"],
-  "version": "1.0.31",
+  "version": "1.0.32",
   "last_push": {
-    "timestamp": "2026-04-04T13:01:04Z",
+    "timestamp": "2026-04-04T16:23:38Z",
     "actor": "AliMora83",
-    "commit_message": "Add AG-Update Meta section to AG-Update.md
-
-Added AG-Update Meta section with project details.",
-    "sha": "8098e75"
+    "commit_message": "Update",
+    "sha": "4408f58"
   },
   "last_updated": "2026-04-04"
 }
