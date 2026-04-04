@@ -1,277 +1,213 @@
-🧐 🤖 Namka Control – Project Overview
-======================================
+# 🧐 🤖 Namka Control — Master.md
 
-> Owner: Ali Mora | Location: Johannesburg, ZA Last updated: 2026-04-04 | Version: 1.0.30
+> Owner: Ali Mora  
+> Location: Johannesburg, ZA  
+> Last updated: 2026-04-04  
+> Version: 1.0.30
 
-🎯 Mission
-----------
+## Mission
 
-Streamline project management through AI-assisted development — providing real-time visibility, structured multi-agent governance, and an approved operating source of truth for active work.
+Streamline project management through AI-assisted development by providing real-time visibility, structured multi-agent governance, and an approved operating source of truth for active work.
 
-**Why Master.md exists:**
+## Purpose
 
-- MACP uses this as the approved operating truth for execution, ratification, and conflict prevention.
+`Master.md` is the approved operating truth for Namka Control.
 
----
+It exists to:
+- define approved architecture and workflow decisions,
+- record approved phase and sprint scope,
+- anchor execution and ratification,
+- reduce ambiguity and hallucination across agents.
 
 ## Governance Reference
 
-This file contains only approved architecture and phase/sprint scope.
+This file contains only approved architecture and approved phase/sprint scope.
 
-- All draft ideas and unapproved changes live in `Master-Update.md`.
-- Only items marked `APPROVED` in `Master-Update.md` are copied or promoted here.
-- AG must use `Master.md` (plus the current `AG-Update-*.md` work order) as the single source of truth for execution.
-- Any discrepancy between `Master-Update.md` and `Master.md` is resolved in favor of `Master.md` until a new approval cycle completes.
-
----
+- All draft ideas, proposed changes, and unapproved work live in `Master-Update.md`.
+- Only items explicitly approved in `Master-Update.md` are promoted into `Master.md`.
+- `AG-Update.md` must be created only from approved scope already present in `Master.md`.
+- `AI-Logs.md` records actual execution outcomes, not proposed work.
+- If `Master-Update.md` and `Master.md` disagree, `Master.md` is the active source of truth until a new approval cycle is completed.
 
 ## Agent File Authority
 
 To minimize Ali-in-the-loop document handling, each AI agent is expected to directly open, read, review, update, and save the files relevant to its role **when its runtime supports direct repository access**.
 
-When an agent runtime cannot directly persist edits to GitHub or the repository, the agent must still perform its review/update role by producing exact edit-ready changes for application through a repo-capable path.
+If an agent runtime cannot directly persist changes to GitHub or the repository, the agent must still perform its role by producing exact edit-ready changes for application through a repo-capable path.
 
-### Authority model
+### Authority Model
 
-This workflow separates three types of authority:
+This workflow separates four types of authority:
 
-- **Review authority** — the agent may inspect a file, propose edits, and record approval or correction notes.
-- **Write authority** — the agent may author or modify the content of a file within its assigned scope.
-- **Persistence authority** — the agent/runtime may save those approved changes back to the repository.
-- **Execution authority** — the agent may implement approved code or documentation changes and record delivery outcomes.
+- **Review authority** — inspect files, propose edits, and record approval or correction notes.
+- **Write authority** — author or modify content within assigned scope.
+- **Persistence authority** — save approved changes back to the repository.
+- **Execution authority** — implement approved code or documentation changes and record outcomes.
 
-Review authority and write authority do not automatically guarantee persistence authority in every runtime.
+Review or write authority does not automatically guarantee persistence authority in every runtime.
 
-### File authority by agent
+### File Authority by Agent
 
-- **Claude**
-  - Review authority: `Master-Update.md`, `Master.md`, `AG-Update.md`
-  - Write authority: may create and update `Master-Update.md`; may create and update `AG-Update.md`; may append UX/product review notes where appropriate
-  - Persistence authority: direct when supported by runtime; otherwise produces exact edit-ready changes for repo application
-  - Execution authority: none for code implementation
+#### Claude
+- Review authority: `Master-Update.md`, `Master.md`, `AG-Update.md`
+- Write authority: may create and update `Master-Update.md`; may create and update `AG-Update.md`; may append UX and product review notes
+- Persistence authority: direct when runtime allows; otherwise provides exact edit-ready changes
+- Execution authority: none for code implementation
 
-- **Gemini**
-  - Review authority: `Master-Update.md`, `Master.md`
-  - Write authority: may review and update `Master-Update.md`; may append technical approval notes and architecture corrections
-  - Persistence authority: direct when supported by runtime; otherwise produces exact edit-ready changes for repo application
-  - Execution authority: none for code implementation
+#### Gemini
+- Review authority: `Master-Update.md`, `Master.md`
+- Write authority: may review and update `Master-Update.md`; may append technical approval notes and architecture corrections
+- Persistence authority: direct when runtime allows; otherwise provides exact edit-ready changes
+- Execution authority: none for code implementation
 
-- **Comet**
-  - Review authority: `Master-Update.md`, `Master.md`, assigned documentation files
-  - Write authority: may review and update `Master-Update.md`; may update documentation alignment notes and research-backed corrections; may maintain `.md` documentation as assigned
-  - Persistence authority: direct when supported by runtime; otherwise produces exact edit-ready changes for repo application
-  - Execution authority: documentation maintenance only, within approved scope
+#### Comet
+- Review authority: `Master-Update.md`, `Master.md`, assigned documentation files
+- Write authority: may review and update `Master-Update.md`; may update documentation alignment notes and research-backed corrections; may maintain `.md` documentation as assigned
+- Persistence authority: direct when runtime allows; otherwise provides exact edit-ready changes
+- Execution authority: documentation maintenance only, within approved scope
 
-- **AG**
-  - Review authority: `AG-Update.md`, implementation-relevant docs
-  - Write authority: may update implementation files; may append execution evidence and outcomes to `AI-Logs.md`
-  - Persistence authority: direct for approved implementation and execution logging
-  - Execution authority: may execute only from approved `AG-Update.md`
+#### AG
+- Review authority: `AG-Update.md`, implementation-relevant docs
+- Write authority: may update implementation files; may append execution evidence and outcomes to `AI-Logs.md`
+- Persistence authority: direct for approved implementation and execution logging
+- Execution authority: may execute only from approved `AG-Update.md`
 
-### Promotion rules
+### Promotion Rules
 
 - `Master-Update.md` is the collaborative review workspace.
 - `Master.md` is updated only with content that has passed the approval gate.
 - `AG-Update.md` must only be written from approved scope already promoted into `Master.md`.
-- `AI-Logs.md` must reflect actual execution outcomes only, not proposed work.
-- If an agent has review/write authority but lacks persistence authority in its current runtime, its approved changes must still be captured as exact edit-ready text and applied through the repo-capable execution path.
+- `AI-Logs.md` must reflect actual execution outcomes only.
+- If an agent has review or write authority but lacks persistence authority in its current runtime, approved changes must still be captured as exact edit-ready text and applied through a repo-capable path.
 
-### Ali role
+### Ali Role
 
 - Ali defines goals, constraints, and priorities.
-- Ali is not required to manually copy AI-proposed edits between files when an assigned agent or repo-capable path can apply them.
-- Ali remains the human owner of final project direction, but not the default document relay between agents.
+- Ali is not required to manually relay AI-proposed edits between files when an assigned agent or repo-capable path can apply them.
+- Ali remains the human owner of final project direction.
 
----
+## Versioning
 
-📜 Versioning & Change Log
---------------------------
+This project uses semantic versioning in the format `MAJOR.MINOR.PATCH`.
 
-This project uses a three-part version number: `MAJOR.MINOR.PATCH`
-
-| Part | Who changes it | When |
+| Part | Changed by | When |
 |---|---|---|
-| **PATCH** | GitHub Actions (auto) | Every push to `main` |
-| **MINOR** | Ali (manual) | Meaningful feature additions or workflow changes |
-| **MAJOR** | Ali (manual) | Breaking changes to MACP protocol or architecture |
+| `PATCH` | GitHub Actions | Every push to `main` |
+| `MINOR` | Ali | Meaningful feature additions or workflow changes |
+| `MAJOR` | Ali | Breaking changes to governance model or architecture |
 
-### AI_CHANGELOG.md — Purpose & Decision
+## AI_CHANGELOG.md
 
-`AI_CHANGELOG.md` is a dedicated, auto-maintained file that logs every versioned change to this repository. It was introduced in **v1.0.1** for the following reasons:
+`AI_CHANGELOG.md` is the auto-maintained history file for this repository.
 
-*   • **AI context without clutter** — Any agent starting a new session can read `AI_CHANGELOG.md` to understand recent changes without parsing the full `Master.md`.
-*   • **Hallucination prevention** — Agents can verify that the version they are reading is the latest, and diff their understanding against the log.
-*   • **Separation of concerns** — `Master.md` remains the architectural source of truth. `AI_CHANGELOG.md` handles the history of how it got there.
-*   • **Scalability** — As the project grows, the review log inside `Master.md` would become unwieldy. `AI_CHANGELOG.md` offloads chronological history so `Master.md` stays focused.
+It exists to:
+- give agents quick session context without rereading all of `Master.md`,
+- reduce hallucination by clarifying recent changes,
+- separate architecture from chronological history,
+- keep `Master.md` focused and readable as the project grows.
 
-**Format:** Each entry is prepended (newest first) and contains the version, date, and commit message. Generated automatically by `.github/workflows/update-master-date.yml`.
+**Format:** newest entries first, including version, date, and commit message.  
+Generated automatically by `.github/workflows/update-master-date.yml`.
 
-🏗 Confirmed Architecture
--------------------------
+## Confirmed Architecture
 
 ### Infrastructure
 
-*   • **Server:** Hostinger VPS (namka.cloud) — already paid, always on, no cold starts.
-*   • **Domain:** control.namka.cloud (subdomain A record → VPS IP).
-*   • **Reverse Proxy:** Nginx (already installed on VPS).
-*   • **Containerization:** Docker + Docker Compose (already installed on VPS).
-*   • **SSL:** Certbot / Let's Encrypt (free, auto-renews).
-*   • **CI/CD:** GitHub Actions (auto-deploy on push to main).
+- **Server:** Hostinger VPS (`namka.cloud`) — always on, no cold starts
+- **Domain:** `control.namka.cloud`
+- **Reverse Proxy:** Nginx
+- **Containerization:** Docker + Docker Compose
+- **SSL:** Certbot / Let's Encrypt
+- **CI/CD:** GitHub Actions auto-deploy on push to `main`
 
 ### Application Stack
 
-*   • **Framework:** Next.js 15 (App Router).
-*   • **Language:** TypeScript.
-*   • **Styling:** Tailwind CSS.
-*   • **UI Components:** shadcn/ui.
-*   • **Data Source:** Master.md fetched via GitHub REST API (`/repos/{owner}/{repo}/contents/{path}`).
-*   • **AI Layer:** Gemini API (Google AI Pro) — abstracted via `/api/ai` Route Handler.
-*   • **State Management:** React Context / Hooks.
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui
+- **Primary dashboard source:** `Active-Projects.md` parsed via GitHub API
+- **Governance source:** `Master.md`
+- **AI layer:** Gemini API via `/api/ai`
+- **State management:** React Context / Hooks
 
-📋 Build Phases
----------------
+### Data Model Direction
+
+- `Active-Projects.md` is the current human-readable dashboard content source.
+- `PROJECT-SYNC.json` is the machine-readable per-repo project payload format.
+- Supabase may be used as an approved runtime aggregation and realtime layer when explicitly ratified in `Master.md`.
+- Governance and execution authority remain document-driven even when runtime data sources evolve.
+
+## Build Phases
 
 ### Phase 0 — Repo & Documentation ✅ COMPLETE
 
-- [x] Create `namka-control` GitHub repository.
-- [x] Add `Master.md` as ground-truth document.
-- [x] Add `AGENT-ONBOARDING.md` with full Markdown formatting.
-- [x] Add `.github/workflows/update-master-date.yml` — auto-updates `Last updated` date on every push.
-- [x] Define MACP agent roles, Chain of Custody workflow, and conflict prevention rules.
-- [x] Add auto version bump (PATCH) to GitHub Actions workflow.
-- [x] Add `AI_CHANGELOG.md` — auto-maintained change log for AI agent context.
+- [x] Create `namka-control` GitHub repository
+- [x] Add `Master.md` as ground-truth governance document
+- [x] Add `AGENT-ONBOARDING.md`
+- [x] Add `.github/workflows/update-master-date.yml`
+- [x] Define agent roles, chain of custody, and conflict prevention rules
+- [x] Add automatic patch version bump workflow
+- [x] Add `AI_CHANGELOG.md`
 
 ### Phase 1 — Foundation ✅ COMPLETE
 
-- [x] Scaffold Next.js 15 app locally.
-- [x] Connect to GitHub API, fetch Master.md.
-- [x] Parse Master.md into typed JSON (Projects, Reviews, Priorities).
-- [x] Display 5 focus project cards (filtered from full portfolio).
-- [x] Create `.env.example` with `GITHUB_TOKEN` and `GEMINI_API_KEY` placeholders.
+- [x] Scaffold Next.js app
+- [x] Connect to GitHub API and fetch source docs
+- [x] Parse source markdown into typed JSON
+- [x] Display focus project cards
+- [x] Add `.env.example` with required placeholders
 
 ### Phase 2 — Deploy ✅ COMPLETE
 
-- [x] Write Dockerfile + docker-compose.yml for Next.js app.
-- [x] Configure Nginx reverse proxy for control.namka.cloud.
-- [x] Add A record in Hostinger DNS → VPS IP.
-- [x] Install SSL via Certbot.
-- [x] Set up GitHub Actions for auto-deploy on push to main.
-- [x] Security Audit: Ensure no sensitive data leak in `/api/master` response.
-- [x] UI Refinement: Add error boundaries to Dashboard for partial API failures.
+- [x] Write Dockerfile and `docker-compose.yml`
+- [x] Configure Nginx reverse proxy
+- [x] Point DNS to VPS
+- [x] Install SSL via Certbot
+- [x] Set up GitHub Actions auto-deploy
+- [x] Audit `/api/master` for sensitive data exposure
+- [x] Add dashboard error boundaries for partial API failure
 
 ### Phase 3 — Resilience & Performance 🔄 IN PROGRESS
 
-- [ ] Implement response caching for GitHub API calls.
-- [ ] Zero-downtime deploy strategy (health checks, rolling restart).
-- [ ] Comprehensive error boundary coverage across all route segments.
-- [ ] Performance audit and Lighthouse score baseline.
+- [ ] Implement caching for GitHub API calls
+- [ ] Add zero-downtime deployment strategy
+- [ ] Expand error boundary coverage
+- [ ] Run performance audit and establish Lighthouse baseline
 
-📂 Active Projects
-------------------
+## Active Projects
 
-Project portfolio data has been moved to `Active-Projects.md`.
+Project portfolio data lives in `Active-Projects.md`.
 
-**Purpose:**
+This separation keeps:
+- `Master.md` focused on governance, architecture, approvals, and execution truth,
+- `Active-Projects.md` focused on dashboard-visible project data,
+- coordination docs separate from runtime project content.
 
-*   Keep `Master.md` focused on governance, MACP workflow, build phases, and review history.
-*   Use `Active-Projects.md` as the dedicated dashboard content source.
-*   Prevent duplication between coordination docs and UI data parsing.
-
-👥 AI Agent Assignments
------------------------
+## AI Agent Assignments
 
 | Agent | Core Function | Status |
 |---|---|---|
-| **Gemini** | Architect & UI Lead. Responsible for system design, Dashboard implementation, and Master.md initialization. | Available |
-| **Claude** | UX & Product Owner. Responsible for final ratification, UX flow logic, and authoring AG-Update.md. | Active |
-| **Antigravity (AG)** | The Implementer. Sole agent authorized to commit code. Executes instructions from AG-Update.md. | Available |
-| **Comet** | Researcher & Auditor. Responsible for browser-based research, reasoning, and maintaining all `.md` documentation. | Active |
+| **Gemini** | Architect and UI lead. Responsible for system design, dashboard architecture, and technical review. | Available |
+| **Claude** | UX and product owner. Responsible for planning, ratification flow, and authoring `AG-Update.md`. | Active |
+| **AG** | Sole implementation agent authorized to commit code and update `AI-Logs.md` after execution. | Available |
+| **Comet** | Researcher, auditor, and documentation maintainer. Responsible for review support and markdown alignment. | Active |
 
-## 🔄 MACP Workflow (Chain of Custody)
+## MACP Workflow
 
 0. **Context Sync** — Agent reads `AI_CHANGELOG.md` and relevant docs before starting.
 1. **Objective Defined** — Ali defines the task with Claude.
 2. **Planning Draft** — Claude creates or updates `Master-Update.md` with proposed architecture, phases, and sprints.
-3. **Technical Review** — Gemini reviews and updates `Master-Update.md`.
-4. **Audit Review** — Comet reviews and updates `Master-Update.md`.
-5. **Approval Gate** — Each phase/sprint in `Master-Update.md` is marked `APPROVED`, `REJECTED`, or `NEEDS-REVISION`.
-6. **Promotion to Canon** — Only approved phases/sprints are copied into `Master.md`.
+3. **Technical Review** — Gemini reviews and updates `Master-Update.md` directly when runtime allows, or provides exact edit-ready changes for repo application.
+4. **Audit Review** — Comet reviews and updates `Master-Update.md` directly when runtime allows, or provides exact edit-ready changes for repo application.
+5. **Approval Gate** — Proposed work is reviewed and marked according to the active approval model in `Master-Update.md`.
+6. **Promotion to Canon** — Only approved phases and sprints are promoted into `Master.md`.
 7. **Execution Order** — Claude creates `AG-Update.md` using only approved scope already present in `Master.md`.
-8. **Implementation** — AG executes the approved work and commits code changes.
+8. **Implementation** — AG executes approved work and applies implementation changes.
 9. **Execution Report** — AG records outcomes, blockers, and evidence in `AI-Logs.md`.
 
-📋 Review Log
--------------
+## Execution Rule
 
-### Session Review — 2026-03-30 (Evening) — Session 6
-
-**Agent:** Comet | **Status:** Completed | **Topic:** Phase 2 Closure — Error Boundaries & Full Deploy Ratification
-
-#### Ratification
-
-Antigravity (AG) Phase 2 implementation is **fully ratified**. Commit `1d088a5` is live on the VPS, returning `200 OK`. All 7 Phase 2 checklist items are confirmed complete.
-
-#### Work Completed This Session
-
-*   • ✅ **Error Boundaries Implemented (AG)** — `ErrorBoundary.tsx` (React class component, `'use client'`) and `ErrorCard.tsx` (red-styled error display) created. `route.ts` wrapped in `try/catch` returning structured `{ error, detail }` JSON. `Dashboard.tsx` updated: `getMasterData()` returns a Result type (never throws), header degrades gracefully, projects section renders `ErrorCard` on error, full tree wrapped in `ErrorBoundary`.
-*   • ✅ **Phase 2 Marked Complete** — All 7 checklist items ticked. Phase 2 header updated to ✅ COMPLETE.
-*   • ✅ **Phase 3 Checklist Added** — Resilience & Performance phase scaffolded with 4 pending items.
-*   • ✅ **Active-Projects.md Updated (Comet, earlier this session)** — Namka Control Dashboard card: Next Step updated to Phase 3, Progress updated to Phase 1 ✅ · Phase 2 ✅ · Phase 3 🔄.
-*   • ✅ **AI_CHANGELOG.md Updated** — New entry added for Phase 2 closure documentation.
-
-#### Recommendations
-
-*   • **AG** — Begin Phase 3: implement `stale-while-revalidate` caching for `/api/master` to reduce GitHub API rate-limit risk.
-*   • **Ali** — Confirm Security Audit result: verify `https://control.namka.cloud/api/master` response contains no raw `GITHUB_TOKEN` or `GEMINI_API_KEY` values.
-*   • **Gemini** — Review Dashboard UI for any remaining unguarded async boundaries in sub-components.
-
----
-
-### Session Review — 2026-03-30 (Morning) — Session 5
-
-**Agent:** Comet | **Status:** Completed | **Topic:** Session 4 Ratification & Master.md Optimization docs: ratify Session 4 and optimize Master.md for Phase 2
-
-#### Ratification
-
-Antigravity (AG) Session 4 review is **ratified**. The Next.js 15 foundation, GitHub API integration, and glassmorphic UI are verified.
-
-#### Work Completed This Session
-
-*   • ✅ **MACP Workflow Updated** — Added "Step 0: Context Sync" to mandate reading `AI_CHANGELOG.md` before starting work.
-*   • ✅ **Phase 2 Checklist Expanded** — Added Security Audit (API leak check) and UI Refinement (Error boundaries) as per AG's recommendations to ensure they are tracked.
-*   • ✅ **Project Next Steps Refined** — Updated Priority 1 "Next Step" to explicitly define owners for Phase 2 (Docker/VPS/Ratification).
-*   • ✅ **Timestamp Updated** — `Last updated` date set to 2026-03-30.
-
-#### Recommendations
-
-*   • **Gemini/Ali** to finalize the Docker/Nginx configuration strategy.
-*   • **Comet** to conduct a research audit on Hostinger VPS A-record propagation and Nginx SSL best practices for subdomains.
-*   • **Claude** to monitor for UX regressions following the "minimal foundation" reset in the `src` directory.
-
----
-
-### Session Review — 2026-04-01 — Session 7
-
-**Agent:** Comet | **Status:** Completed | **Topic:** SmartPress Audit — `SmartPress-Update` review, cross-project sync, Namka Dashboard update
-
-#### Ratification
-
-Claude's Sprint 1 sign-off (embedded in `SmartPress-Update`) is **ratified**. Architecture is sound. Phase 1 implementation tasks (1.1 ffprobe, 1.2 BackgroundTask, 1.3 Error Schema) are approved. Phase 1 is NOT operationally closed — Blocking Runtime Issue remains open pending AG's 4 integration checks and smoke test.
-
-#### Work Completed This Session
-
-* • ✅ **SmartPress-Update Updated** — Comet formal audit section appended with approved elements, flagged blockers, phase gate summary, and AG action checklist. Status: `PENDING APPROVAL`.
-* • ✅ **SmartPress `Master.md` Updated** — New Review Log entry added with Comet audit + Claude sign-off record.
-* • ✅ **SmartPress `AI_CHANGELOG.md` Updated** — Full session log added: approved items, flagged blockers, IAM notes for Phase 2.1.
-* • ✅ **SmartPress `PROJECT-SYNC.json` Updated** — `progress_label`, `next_step`, and `blocker` fields updated to reflect current state.
-* • ✅ **`Active-Projects.md` Updated (This Session)** — SmartPress card: Next Step, Blocker, Progress, and Last Updated all refreshed to reflect Comet audit outcome.
-
-#### Recommendations
-
-* • **AG** — Complete the 4 Blocking Runtime Issue checks in order: (1) Verify `NEXT_PUBLIC_API_URL` in Vercel, (2) confirm API route alignment via FastAPI `/docs`, (3) check CORS origin, (4) run and log the smoke test.
-* • **Claude** — Prepare Job Status UX designs (`Queued → Processing → Finalizing → Completed → Failed`) as a pre-Phase 2 deliverable. No Phase 2 code work until Phase 1 is verified.
-* • **Comet** — Update SmartPress `Master.md` to close Phase 1 and open Phase 2 once AG confirms smoke test pass.
-
----
-
-This is a living document. AI agents update this file with reviews, status changes, and recommendations.
+No implementation may begin unless:
+- the relevant scope exists in `Master.md`,
+- the related review cycle has completed in `Master-Update.md`,
