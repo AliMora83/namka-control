@@ -2,6 +2,15 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.30 — 2026-04-04
+- Revise MACP Workflow and add planning draft steps
+
+Updated MACP Workflow steps and added planning draft process.
+
+\
+## v1.0.30 — 2026-04-04\n- Revise MACP Workflow and add planning draft steps\
+\
+Updated MACP Workflow steps and added planning draft process.\n
 ## v1.0.29 — 2026-04-04
 - Add governance reference to Master.md
 
