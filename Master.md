@@ -130,17 +130,18 @@ Project portfolio data has been moved to `Active-Projects.md`.
 | **Antigravity (AG)** | The Implementer. Sole agent authorized to commit code. Executes instructions from AG-Update.md. | Available |
 | **Comet** | Researcher & Auditor. Responsible for browser-based research, reasoning, and maintaining all `.md` documentation. | Active |
 
-🔄 MACP Workflow (Chain of Custody)
------------------------------------
+## 🔄 MACP Workflow (Chain of Custody)
 
-*   0. **Context Sync** — Agent reads `AI_CHANGELOG.md` to load recent context.
-*   i. **Objective Defined** — Ali sets the project goal.
-*   ii. **Concept & Brainstorm (Gemini)** — Gemini updates Master.md and README.md with proposed architecture.
-*   iii. **Audit (Comet)** — Comet researches dependencies and ratifies technical logic.
-*   iv. **UX Ratification (Claude)** — Claude ensures the plan meets Ali's needs and updates Master.md.
-*   v. **Execution Trigger (Claude)** — Claude writes AG-Update.md (the strict work order).
-*   vi. **Implementation (Antigravity)** — AG reads AG-Update.md and commits the code.
-*   vii. **Verification (Gemini)** — Gemini updates the Dashboard UI and verification status.
+0. **Context Sync** — Agent reads `AI_CHANGELOG.md` and relevant docs before starting.
+1. **Objective Defined** — Ali defines the task with Claude.
+2. **Planning Draft** — Claude creates or updates `Master-Update.md` with proposed architecture, phases, and sprints.
+3. **Technical Review** — Gemini reviews and updates `Master-Update.md`.
+4. **Audit Review** — Comet reviews and updates `Master-Update.md`.
+5. **Approval Gate** — Each phase/sprint in `Master-Update.md` is marked `APPROVED`, `REJECTED`, or `NEEDS-REVISION`.
+6. **Promotion to Canon** — Only approved phases/sprints are copied into `Master.md`.
+7. **Execution Order** — Claude creates `AG-Update.md` using only approved scope already present in `Master.md`.
+8. **Implementation** — AG executes the approved work and commits code changes.
+9. **Execution Report** — AG records outcomes, blockers, and evidence in `AI-Logs.md`.
 
 📋 Review Log
 -------------
