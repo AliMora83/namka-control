@@ -71,6 +71,7 @@ Review or write authority does not automatically guarantee persistence authority
 - Write authority: may update implementation files; may append execution evidence and outcomes to `AI-Logs.md`
 - Persistence authority: direct for approved implementation and execution logging
 - Execution authority: may execute only from approved `AG-Update.md`
+> Every `AG-Update-*.md` must begin with a `📌 AG-Update Meta` block that records the Phase, Sprint, Issued by, Date, Time, and Status for traceability.
 
 ### Promotion Rules
 
