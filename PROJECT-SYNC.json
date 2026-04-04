@@ -14,14 +14,14 @@
   "live_url": "https://control.namka.cloud",
   "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
   "agents": ["Claude", "Comet", "Gemini", "AG"],
-  "version": "1.0.30",
+  "version": "1.0.31",
   "last_push": {
-    "timestamp": "2026-04-04T09:15:39Z",
+    "timestamp": "2026-04-04T13:00:14Z",
     "actor": "AliMora83",
-    "commit_message": "Refactor Master.md for clarity and structure
+    "commit_message": "Revise Agent Onboarding and MACP Protocol
 
-Updated Master.md for improved clarity and structure, including changes to mission, purpose, governance, authority model, and agent assignments. Enhanced versioning and changelog sections for better documentation.",
-    "sha": "8e87176"
+Updated MACP protocol version and enhanced onboarding details.",
+    "sha": "da1debd"
   },
   "last_updated": "2026-04-04"
 }
