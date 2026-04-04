@@ -6,13 +6,11 @@
 🎯 Mission
 ----------
 
-Streamline project management through AI-assisted development — providing real-time visibility, multi-agent coordination, and a single source of truth for all active projects.
+Streamline project management through AI-assisted development — providing real-time visibility, structured multi-agent governance, and an approved operating source of truth for active work.
 
 **Why Master.md exists:**
 
-*   • Persistent memory across AI agent sessions — when a chat gets too long, agents reference this for full context.
-*   • MACP (Multi-Agent Coordination Protocol) uses this as the ground truth to cross-check agent reviews and prevent hallucinations.
-*   • The `Last updated` date and `Version` are auto-updated by GitHub Actions on every push to `main`.
+- MACP uses this as the approved operating truth for execution, ratification, and conflict prevention.
 
 ---
 
@@ -216,7 +214,5 @@ Claude's Sprint 1 sign-off (embedded in `SmartPress-Update`) is **ratified**. Ar
 * • **Comet** — Update SmartPress `Master.md` to close Phase 1 and open Phase 2 once AG confirms smoke test pass.
 
 ---
-
-This is a living document. AI agents update this file with reviews, status changes, and recommendations.
 
 This is a living document. AI agents update this file with reviews, status changes, and recommendations.
