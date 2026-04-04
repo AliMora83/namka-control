@@ -27,25 +27,46 @@ This file contains only approved architecture and phase/sprint scope.
 
 ## Agent File Authority
 
-To minimize Ali-in-the-loop document handling, each AI agent is expected to directly open, read, update, and save the files relevant to its role.
+To minimize Ali-in-the-loop document handling, each AI agent is expected to directly open, read, review, update, and save the files relevant to its role **when its runtime supports direct repository access**.
 
-### File write authority
+When an agent runtime cannot directly persist edits to GitHub or the repository, the agent must still perform its review/update role by producing exact edit-ready changes for application through a repo-capable path.
+
+### Authority model
+
+This workflow separates three types of authority:
+
+- **Review authority** — the agent may inspect a file, propose edits, and record approval or correction notes.
+- **Write authority** — the agent may author or modify the content of a file within its assigned scope.
+- **Persistence authority** — the agent/runtime may save those approved changes back to the repository.
+- **Execution authority** — the agent may implement approved code or documentation changes and record delivery outcomes.
+
+Review authority and write authority do not automatically guarantee persistence authority in every runtime.
+
+### File authority by agent
 
 - **Claude**
-  - May create and update `Master-Update.md`
-  - May create and update `AG-Update.md`
-  - May append UX/product review notes where appropriate
+  - Review authority: `Master-Update.md`, `Master.md`, `AG-Update.md`
+  - Write authority: may create and update `Master-Update.md`; may create and update `AG-Update.md`; may append UX/product review notes where appropriate
+  - Persistence authority: direct when supported by runtime; otherwise produces exact edit-ready changes for repo application
+  - Execution authority: none for code implementation
+
 - **Gemini**
-  - May review and update `Master-Update.md`
-  - May append technical approval notes and architecture corrections
+  - Review authority: `Master-Update.md`, `Master.md`
+  - Write authority: may review and update `Master-Update.md`; may append technical approval notes and architecture corrections
+  - Persistence authority: direct when supported by runtime; otherwise produces exact edit-ready changes for repo application
+  - Execution authority: none for code implementation
+
 - **Comet**
-  - May review and update `Master-Update.md`
-  - May update documentation alignment notes and research-backed corrections
-  - May maintain `.md` documentation as assigned
+  - Review authority: `Master-Update.md`, `Master.md`, assigned documentation files
+  - Write authority: may review and update `Master-Update.md`; may update documentation alignment notes and research-backed corrections; may maintain `.md` documentation as assigned
+  - Persistence authority: direct when supported by runtime; otherwise produces exact edit-ready changes for repo application
+  - Execution authority: documentation maintenance only, within approved scope
+
 - **AG**
-  - May execute only from approved `AG-Update.md`
-  - May update implementation files
-  - May append execution evidence and outcomes to `AI-Logs.md`
+  - Review authority: `AG-Update.md`, implementation-relevant docs
+  - Write authority: may update implementation files; may append execution evidence and outcomes to `AI-Logs.md`
+  - Persistence authority: direct for approved implementation and execution logging
+  - Execution authority: may execute only from approved `AG-Update.md`
 
 ### Promotion rules
 
@@ -53,11 +74,13 @@ To minimize Ali-in-the-loop document handling, each AI agent is expected to dire
 - `Master.md` is updated only with content that has passed the approval gate.
 - `AG-Update.md` must only be written from approved scope already promoted into `Master.md`.
 - `AI-Logs.md` must reflect actual execution outcomes only, not proposed work.
+- If an agent has review/write authority but lacks persistence authority in its current runtime, its approved changes must still be captured as exact edit-ready text and applied through the repo-capable execution path.
 
 ### Ali role
 
 - Ali defines goals, constraints, and priorities.
-- Ali is not required to manually copy AI-proposed edits between files when agents have authority to update those files directly.
+- Ali is not required to manually copy AI-proposed edits between files when an assigned agent or repo-capable path can apply them.
+- Ali remains the human owner of final project direction, but not the default document relay between agents.
 
 ---
 
