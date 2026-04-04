@@ -14,14 +14,14 @@
   "live_url": "https://control.namka.cloud",
   "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
   "agents": ["Claude", "Comet", "Gemini", "AG"],
-  "version": "1.0.28",
+  "version": "1.0.30",
   "last_push": {
-    "timestamp": "2026-04-04T08:18:52Z",
+    "timestamp": "2026-04-04T08:27:23Z",
     "actor": "AliMora83",
-    "commit_message": "Document governance structure and promotion rules
+    "commit_message": "Revise mission statement and clean up content
 
-Added governance model and promotion rules to Master-Update.md",
-    "sha": "3e677e3"
+Updated mission statement and clarified the purpose of Master.md. Removed duplicate text at the end.",
+    "sha": "c4aa234"
   },
   "last_updated": "2026-04-04"
 }
