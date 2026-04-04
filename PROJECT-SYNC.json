@@ -14,14 +14,14 @@
   "live_url": "https://control.namka.cloud",
   "deploy_target": "Hostinger VPS · Docker · Nginx · Certbot",
   "agents": ["Claude", "Comet", "Gemini", "AG"],
-  "version": "1.0.27",
+  "version": "1.0.28",
   "last_push": {
-    "timestamp": "2026-04-04T08:14:41Z",
+    "timestamp": "2026-04-04T08:18:15Z",
     "actor": "AliMora83",
-    "commit_message": "Document governance model and promotion rules
+    "commit_message": "Update Sprint 2 work order with governance note
 
-Added governance model and promotion rules for project management.",
-    "sha": "c152ba0"
+Added governance note and pre-conditions for Sprint 2.",
+    "sha": "011b67d"
   },
   "last_updated": "2026-04-04"
 }
