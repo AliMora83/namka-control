@@ -5,7 +5,9 @@
 **Status:** 📋 READY — Do not execute until Sprint 1 acceptance gate passes
 
 ---
+> Governance note: This Sprint 2 work order is derived from the Phase 3 scope currently approved in `Master.md`. If `Master-Update.md` and `Master.md` ever disagree, AG must follow `Master.md` and flag the mismatch to Ali and Claude.
 
+---
 
 ## ⚠️ Pre-conditions — All must be confirmed before starting
 
