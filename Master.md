@@ -25,6 +25,42 @@ This file contains only approved architecture and phase/sprint scope.
 
 ---
 
+## Agent File Authority
+
+To minimize Ali-in-the-loop document handling, each AI agent is expected to directly open, read, update, and save the files relevant to its role.
+
+### File write authority
+
+- **Claude**
+  - May create and update `Master-Update.md`
+  - May create and update `AG-Update.md`
+  - May append UX/product review notes where appropriate
+- **Gemini**
+  - May review and update `Master-Update.md`
+  - May append technical approval notes and architecture corrections
+- **Comet**
+  - May review and update `Master-Update.md`
+  - May update documentation alignment notes and research-backed corrections
+  - May maintain `.md` documentation as assigned
+- **AG**
+  - May execute only from approved `AG-Update.md`
+  - May update implementation files
+  - May append execution evidence and outcomes to `AI-Logs.md`
+
+### Promotion rules
+
+- `Master-Update.md` is the collaborative review workspace.
+- `Master.md` is updated only with content that has passed the approval gate.
+- `AG-Update.md` must only be written from approved scope already promoted into `Master.md`.
+- `AI-Logs.md` must reflect actual execution outcomes only, not proposed work.
+
+### Ali role
+
+- Ali defines goals, constraints, and priorities.
+- Ali is not required to manually copy AI-proposed edits between files when agents have authority to update those files directly.
+
+---
+
 📜 Versioning & Change Log
 --------------------------
 
