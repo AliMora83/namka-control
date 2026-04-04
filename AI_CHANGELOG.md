@@ -2,6 +2,15 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.32 — 2026-04-04
+- Specify meta block requirements for AG-Update files
+
+Add requirement for AG-Update files to include a meta block.
+
+\
+## v1.0.32 — 2026-04-04\n- Specify meta block requirements for AG-Update files\
+\
+Add requirement for AG-Update files to include a meta block.\n
 ## v1.0.31 — 2026-04-04
 - Enhance README with project details and instructions
 
