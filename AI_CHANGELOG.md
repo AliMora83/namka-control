@@ -2,6 +2,15 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.31 — 2026-04-04
+- Enhance README with project details and instructions
+
+Expanded the README to provide detailed project information, governance model, local development instructions, and deployment process.
+
+\
+## v1.0.31 — 2026-04-04\n- Enhance README with project details and instructions\
+\
+Expanded the README to provide detailed project information, governance model, local development instructions, and deployment process.\n
 ## v1.0.30 — 2026-04-04
 - Revise MACP Workflow and add planning draft steps
 
