@@ -2,6 +2,15 @@
 
 This file is auto-maintained for AI context. Each entry reflects a versioned change to this repository.
 
+## v1.0.28 — 2026-04-04
+- Remove governance roles and promotion rules section
+
+Removed governance and document roles section along with promotion rules from the AG-Update-Sprint2 document.
+
+\
+## v1.0.28 — 2026-04-04\n- Remove governance roles and promotion rules section\
+\
+Removed governance and document roles section along with promotion rules from the AG-Update-Sprint2 document.\n
 ## v1.0.27 — 2026-04-01
 - docs(active-projects): update SmartPress — blocker, next step, progress, date (2026-04-01)
 

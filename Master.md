@@ -1,7 +1,7 @@
 🧐 🤖 Namka Control – Project Overview
 ======================================
 
-> Owner: Ali Mora | Location: Johannesburg, ZA Last updated: 2026-04-01 | Version: 1.0.27
+> Owner: Ali Mora | Location: Johannesburg, ZA Last updated: 2026-04-04 | Version: 1.0.28
 
 🎯 Mission
 ----------
